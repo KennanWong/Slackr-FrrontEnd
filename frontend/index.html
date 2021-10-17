@@ -4,10 +4,13 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Slackr</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- You can add your styles and scripts here -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" media="screen" href="styles/provided.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/auth.css" />
   <script type="module" src="src/helpers.js"></script>
 </head>
 
@@ -17,12 +20,69 @@
     <h1>Slackr</h1>
   </header>
   <main role="main">
-    <!-- app goes here -->
+    <div id="popUp" class="popUp" style="display: none;">
+      <div id="errorBox" class="errorBox">
+        <h1>Error</h1>
+        <h2 class="errorMsg" id="errorMsg">Error msg</h2>
+        <div class="flexBox" style="display: flex; align-items: flex-end;">
+          <div class="X" id="CloseError">
+            X
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <div id="page-login">
+
+      <form>
+        <div class="form-group">
+          <label for="Login-email">Email address</label>
+          <input type="email" class="form-control" id="Login-email" aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="Login-password">Password</label>
+          <input type="password" class="form-control" id="Login-password" placeholder="Password">
+        </div>
+        <button type="button" class="btn btn-primary" id="LoginBtn">Login</button>
+      </form>
+      <div class="RegisterText" id="RegisterText" style="display: inline;">
+        Create account
+      </div>
+    </div>
+    <div id="page-register" style="display: none;">
+
+      <form>
+        <div class="form-group">
+          <label for="Reg-email">Email address</label>
+          <input type="email" class="form-control" id="Reg-email" aria-describedby="emailHelp" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="Reg-name">Name</label>
+          <input type="text" class="form-control" id="Reg-name" placeholder="Enter name">
+        </div>
+        <div class="form-group">
+          <label for="Reg-password">Password</label>
+          <input type="password" class="form-control" id="Reg-password" placeholder="Password">
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">
+        </div>
+        <button type="button" class="btn btn-primary" id="RegisterBtn">Register</button>
+      </form>
+      <div class="LoginText" id="LoginText" style="display: inline;">
+        Already a user?
+      </div>
+    </div>
+    <button id="test">test</button>
   </main>
   <footer>
     <p>&copy; Slackr</p>
   </footer>
+  <script type="module" src="src/requests.js"></script>
   <script type="module" src="src/main.js"></script>
+  <script type="module" src="src/auth.js"></script>
 </body>
 
 </html>
