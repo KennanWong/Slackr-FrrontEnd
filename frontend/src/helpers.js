@@ -1,3 +1,7 @@
+import {TOKEN} from './main.js'
+import { storeToken } from './auth.js';
+import  {showChannelPage} from './channels.js'
+
 /**
  * Given a js file object representing a jpg or png image, such as one taken
  * from a html file input element, return a promise which resolves to the file
@@ -29,3 +33,29 @@ export function fileToDataUrl(file) {
     reader.readAsDataURL(file);
     return dataUrlPromise;
 }
+
+
+
+export const displayPopup = (errorMsg) => {
+    console.log(errorMsg);
+    document.getElementById("popUp").style.display = 'block';
+    console.log("set display to block")
+    document.getElementById("errorMsg").innerHTML = errorMsg;
+    console.log("Set error message")
+}
+
+
+document.getElementById("closeError").addEventListener('click', () => {
+    document.getElementById("popUp").style.display = 'none';
+});
+
+
+document.getElementById("ResetTKN").addEventListener('click', () => {
+    localStorage.removeItem("slacker-token")
+    console.log("reset Token");
+})
+
+document.getElementById('TestToken').addEventListener('click', () => {
+    storeToken(document.getElementById('tokenInput').value);
+    showChannelPage();
+});

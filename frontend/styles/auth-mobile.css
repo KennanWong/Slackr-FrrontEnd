@@ -1,0 +1,22 @@
+@media (max-width: 600px) {
+    .page-auth {
+        margin-left: auto;
+        margin-right: auto;
+        border: none;
+        padding: 5px;
+        border-radius: none;
+        width: 100%;
+        background-color: #E7ECEF;
+        color: #293241;
+    }
+    
+    .auth-header {
+        text-align: center;
+    }
+    
+    .auth-footer {
+        text-align: center;
+    }
+    
+    
+}

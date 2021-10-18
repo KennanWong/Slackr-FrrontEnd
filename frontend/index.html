@@ -6,11 +6,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Slackr</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- You can add your styles and scripts here -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" media="screen" href="styles/provided.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="styles/auth.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/auth-mobile.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/main-page.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/helper.css" />
   <script type="module" src="src/helpers.js"></script>
 </head>
 
@@ -22,60 +24,146 @@
   <main role="main">
     <div id="popUp" class="popUp" style="display: none;">
       <div id="errorBox" class="errorBox">
-        <h1>Error</h1>
+        <div class="errorHeader" >
+          <h1>Error</h1>
+          <div id="closeError" class="X" style="display: inline-flex; justify-content: flex-end; flex-grow: 0;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" fill="#000"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" fill="#000"/>
+            </svg>
+          </div>
+        </div>
         <h2 class="errorMsg" id="errorMsg">Error msg</h2>
-        <div class="flexBox" style="display: flex; align-items: flex-end;">
-          <div class="X" id="CloseError">
-            X
+        
+      </div>
+    </div>
+    <div class="container" id="auth-page">
+      <div id="page-login" class = "page-auth">
+        <div class="auth-header">
+          <h3>Welcome back!</h3>
+          <h5>Log in to Slackr</h5>
+        </div>
+        <form>
+          <div class="form-group">
+            <label for="Login-email">Email address</label>
+            <input type="email" class="form-control" id="Login-email" aria-describedby="emailHelp" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <label for="Login-password">Password</label>
+              <svg id="showPassword" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+              </svg>
+              <svg id="hidePassword" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+                <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+                <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+                <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/>
+              </svg>
+            </div>
+            
+            <input type="password" class="form-control" id="Login-password" placeholder="Password">
+          </div>
+        </form>
+        <div class="auth-footer">
+          <button type="button" class="btn btn-primary" id="LoginBtn" 
+              style="
+                background-color: #274C77; 
+                border-color: #274C77;
+                ">
+              Login
+            </button>
+            <hr>
+          <div class="RegisterText" id="RegisterText" style="display: inline;">
+            Don't have an account?
+          </div>
+        </div>
+      </div>
+
+      <div id="page-register" class = "page-auth" style="display: none;">
+        <div class="auth-header">
+          <h3> Create your Slackr Account</h3>
+        </div>
+        <form>
+          <div class="form-group">
+            <label for="Reg-email">Email address</label>
+            <input type="email" class="form-control" id="Reg-email" aria-describedby="emailHelp" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+            <label for="Reg-name">Name</label>
+            <input type="text" class="form-control" id="Reg-name" placeholder="Enter name">
+          </div>
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <label for="Reg-password">Password</label>
+              <svg id="Reg-showPassword" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+              </svg>
+              <svg id="Reg-hidePassword" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+                <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+                <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+                <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/>
+              </svg>
+            </div>
+            <input type="password" class="form-control" id="Reg-password" placeholder="Password">
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">
+          </div>
+        </form>
+        <div class="auth-footer">
+          <button type="button" class="btn btn-primary" id="RegisterBtn">Register</button>
+          <hr>
+          <div class="LoginText" id="LoginText" style="display: inline;">
+            Already a user?
           </div>
         </div>
         
       </div>
     </div>
-
-    <div id="page-login">
-
-      <form>
-        <div class="form-group">
-          <label for="Login-email">Email address</label>
-          <input type="email" class="form-control" id="Login-email" aria-describedby="emailHelp" placeholder="Enter email">
+    <div id="main-page" class="main-page" style="display: none;">
+      <div id="channels">
+        <div class="row">
+          <div class="col">
+            <h1>Channels</h1>
+            <ul class="list-group" id="channelsList">
+              <li class="list-group-item">An item</li>
+              <li class="list-group-item">A second item</li>
+              <li class="list-group-item">A third item</li>
+              <li class="list-group-item">A fourth item</li>
+              <li class="list-group-item">And a fifth one</li>
+            </ul>
+            <hr>
+            <div id="joinNewSlack">
+              <button type="button" id="newSlackBtn"  data-bs-toggle="collapse" href="#collapseExample"  class="btn btn-outline-primary"  style="display: flex; align-items: baseline; width: 100%; justify-content: space-between;" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" fill="#000"/>
+                </svg>
+                Join a channel
+              </button>
+            </div>
+            <div class="collapse" id="collapseExample">
+              <div class="card card-body">
+                Channel id: 
+                <input type="text" id="joinChannelId" aria-label="channelid"> </input>
+              </div>
+            </div>
+              
+            
+          </div>
+          <div class="col-9">
+            Messages
+          </div>
         </div>
-        <div class="form-group">
-          <label for="Login-password">Password</label>
-          <input type="password" class="form-control" id="Login-password" placeholder="Password">
-        </div>
-        <button type="button" class="btn btn-primary" id="LoginBtn">Login</button>
-      </form>
-      <div class="RegisterText" id="RegisterText" style="display: inline;">
-        Create account
       </div>
     </div>
-    <div id="page-register" style="display: none;">
-
-      <form>
-        <div class="form-group">
-          <label for="Reg-email">Email address</label>
-          <input type="email" class="form-control" id="Reg-email" aria-describedby="emailHelp" placeholder="Enter email">
-        </div>
-        <div class="form-group">
-          <label for="Reg-name">Name</label>
-          <input type="text" class="form-control" id="Reg-name" placeholder="Enter name">
-        </div>
-        <div class="form-group">
-          <label for="Reg-password">Password</label>
-          <input type="password" class="form-control" id="Reg-password" placeholder="Password">
-        </div>
-        <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password">
-        </div>
-        <button type="button" class="btn btn-primary" id="RegisterBtn">Register</button>
-      </form>
-      <div class="LoginText" id="LoginText" style="display: inline;">
-        Already a user?
-      </div>
-    </div>
-    <button id="test">test</button>
+    <button type="submit" class="btn btn-primary" id="ResetTKN">ResetTKN</button>
+    <br>
+    <input type="text" id="tokenInput"/>
+    <button type="submit" class="btn btn-primary" id="TestToken">TestToken</button>
+    
   </main>
   <footer>
     <p>&copy; Slackr</p>
@@ -83,6 +171,7 @@
   <script type="module" src="src/requests.js"></script>
   <script type="module" src="src/main.js"></script>
   <script type="module" src="src/auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 
 </html>

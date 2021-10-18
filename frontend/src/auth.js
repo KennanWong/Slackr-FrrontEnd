@@ -1,6 +1,21 @@
-import {fetchPost} from './requests.js'
-import  {displayPopup} from './helper.js'
-let token;
+import {fetchPost, apiFetch, login} from './requests.js'
+import  {displayPopup} from './helpers.js'
+import  {showChannelPage} from './channels.js'
+
+
+
+let TOKEN = null;
+let isLoggedIn = false;
+
+export const storeToken = (token) => {
+    TOKEN = token;
+    isLoggedIn = true;
+    localStorage.setItem("slacker-token", TOKEN);
+    console.log("saved token")
+    console.log(TOKEN)
+    console.log("From local storage:" + localStorage.getItem("slacker-token"));
+};
+
 
 /*
         AUTH/LOGIN
@@ -15,10 +30,12 @@ document.getElementById("LoginBtn").addEventListener('click', (e) => {
     }
 
     const onSuccess = (data) => {
-        console.log(data['token'])
+        storeToken(data['token']);
+        showChannelPage();
     }
 
-    fetchPost('auth/login', body, onSuccess);
+    apiFetch('POST', 'auth/login', null, body, onSuccess);
+
 })
 
 document.getElementById("Login-email").addEventListener('blur', () => {
@@ -32,6 +49,8 @@ document.getElementById("Login-password").addEventListener('blur', () => {
 })
 
 document.getElementById("RegisterText").addEventListener('click', () => {
+    document.getElementById("Login-email").value = null;
+    document.getElementById("Login-password").value = null;
     document.getElementById("page-login").style.display = "none"
     document.getElementById("page-register").style.display = "block"
 })
@@ -42,6 +61,10 @@ document.getElementById("RegisterText").addEventListener('click', () => {
 */
 
 document.getElementById("LoginText").addEventListener('click', () => {
+    document.getElementById("Reg-name").value = null;
+    document.getElementById("Reg-email").value= null;
+    document.getElementById("Reg-password").value= null;
+    document.getElementById("confirmPassword").value= null;
     document.getElementById("page-login").style.display = "block"
     document.getElementById("page-register").style.display = "none"
 });
@@ -51,6 +74,7 @@ document.getElementById("RegisterBtn").addEventListener('click', () => {
     const email = document.getElementById("Reg-email").value;
     const password = document.getElementById("Reg-password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
+
 
     if (password !== confirmPassword) {
         displayPopup("Passwords do not match");
@@ -69,6 +93,10 @@ document.getElementById("RegisterBtn").addEventListener('click', () => {
 
     const onSuccess = (data) => {
         console.log(data['token']);
+        storeToken(data['token']);
+        isLoggedIn = true;
+        showChannelPage();
+        
     }
 
     fetchPost('auth/register', body, onSuccess);
@@ -110,6 +138,32 @@ document.getElementById("LogoutBtn").addEventListener('click', () => {
 });
 */
 
+document.getElementById("showPassword").addEventListener('click', () => {
+    document.getElementById('Login-password').type = 'text'
+    document.getElementById("showPassword").style.display = 'none'
+    document.getElementById("hidePassword").style.display = 'inline'
+});
+
+document.getElementById("hidePassword").addEventListener('click', () => {
+    document.getElementById('Login-password').type = 'password'
+    document.getElementById("showPassword").style.display = 'inline'
+    document.getElementById("hidePassword").style.display = 'none'
+});
+
+
+document.getElementById("Reg-showPassword").addEventListener('click', () => {
+    document.getElementById('Reg-password').type = 'text'
+    document.getElementById('confirmPassword').type = 'text'
+    document.getElementById("Reg-showPassword").style.display = 'none'
+    document.getElementById("Reg-hidePassword").style.display = 'inline'
+});
+
+document.getElementById("Reg-hidePassword").addEventListener('click', () => {
+    document.getElementById('Reg-password').type = 'password'
+    document.getElementById('confirmPassword').type = 'password'
+    document.getElementById("Reg-showPassword").style.display = 'inline'
+    document.getElementById("Reg-hidePassword").style.display = 'none'
+});
 
 
 
