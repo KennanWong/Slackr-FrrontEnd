@@ -7,12 +7,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Slackr</title>
   <!-- You can add your styles and scripts here -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" media="screen" href="styles/provided.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="styles/auth.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="styles/auth-mobile.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="styles/main-page.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="styles/helper.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/channel.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/provided.css" />
+
+  <!-- Boostrap sylesheets-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
+
   <script type="module" src="src/helpers.js"></script>
 </head>
 
@@ -127,34 +132,69 @@
       <div id="channels">
         <div class="row">
           <div class="col">
-            <h1>Channels</h1>
+            <h1>Channels</h1>            
+          </div>
+          <div class="col-9">
+            <h1 id="focusedChannelName"></h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
             <ul class="list-group" id="channelsList">
-              <li class="list-group-item">An item</li>
-              <li class="list-group-item">A second item</li>
-              <li class="list-group-item">A third item</li>
-              <li class="list-group-item">A fourth item</li>
-              <li class="list-group-item">And a fifth one</li>
             </ul>
             <hr>
             <div id="joinNewSlack">
-              <button type="button" id="newSlackBtn"  data-bs-toggle="collapse" href="#collapseExample"  class="btn btn-outline-primary"  style="display: flex; align-items: baseline; width: 100%; justify-content: space-between;" >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" fill="#000"/>
-                </svg>
-                Join a channel
+              <button type="button" id="newSlackBtn"  data-bs-toggle="modal" data-bs-target="#newChannelModal"  class="btn btn-outline-primary newChannelBtn">
+                <div class="newChannelBtn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" fill="#000"/>
+                  </svg>
+                  Create a Channel
+                </div>  
               </button>
+              <div class="modal fade" id="newChannelModal" tabindex="-1" role="dialog" aria-labelledby="newChannelModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="neChannelModalLabel">Create a new Channel</h5>
+                      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="newChannelForm">
+                        <div class="form-group">
+                          <label for="Channel-new-name">Channel Name</label>
+                          <input type="text" class="form-control" id="Channel-new-name" placeholder="Enter channel name">
+                        </div>
+                        <div class="form-group">
+                          <label for="Channel-new-description">
+                            Channel description (Optional)
+                          </label>
+                          <input type="text-" class="form-control" id="Channel-new-description" placeholder="Enter a description">
+                        </div>
+                        <div class="form-group">
+                          Private: <input type="checkbox" id="Channel-new-private">
+                        </div>
+                        
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" id="Channel-create" data-bs-dismiss="modal">Create Channel</button>
+                    </div>
+                  </div>
+                </div>
+              </div>  
             </div>
-            <div class="collapse" id="collapseExample">
-              <div class="card card-body">
-                Channel id: 
-                <input type="text" id="joinChannelId" aria-label="channelid"> </input>
-              </div>
-            </div>
-              
-            
           </div>
           <div class="col-9">
-            Messages
+            <div class="landing-page">
+              <h4>Welcome Back!</h1>
+              <h5>Click on a channel to view messages</h5>
+            </div>
+            <div id="FocusedChannelMessages">
+            </div>
           </div>
         </div>
       </div>

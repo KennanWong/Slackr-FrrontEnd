@@ -1,4 +1,8 @@
-@media (max-width: 600px) {
+@media (max-width: 575px) {
+    .container {
+        background-color: #E7ECEF;
+        margin: 0;
+    }
     .page-auth {
         margin-left: auto;
         margin-right: auto;

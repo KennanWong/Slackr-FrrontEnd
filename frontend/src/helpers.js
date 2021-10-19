@@ -59,3 +59,7 @@ document.getElementById('TestToken').addEventListener('click', () => {
     storeToken(document.getElementById('tokenInput').value);
     showChannelPage();
 });
+
+export const getTokenFromLocal = () => {
+    return localStorage.getItem("slacker-token");
+}

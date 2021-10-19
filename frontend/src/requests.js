@@ -1,4 +1,4 @@
-import  {displayPopup} from './helpers.js'
+import  {displayPopup, getTokenFromLocal} from './helpers.js'
 
 export const fetchPost = (route, body, onSucess) => {
     const requestOptions = {
@@ -37,13 +37,15 @@ export const apiFetch = (method, route, TOKEN, body, onSuccess) => {
         body: null,
     }; 
 
+    const token = getTokenFromLocal();
+
     if (method !== 'GET') {
         requestOptions.body = JSON.stringify(body);
     }
 
-    if (TOKEN !== null) {
+    if (token !== null) {
         console.log("added token")
-        requestOptions.headers['Authorization'] = `Bearer ${TOKEN}`;
+        requestOptions.headers['Authorization'] = `Bearer ${token}`;
     } else {
         console.log("empty token")
     }
@@ -55,7 +57,7 @@ export const apiFetch = (method, route, TOKEN, body, onSuccess) => {
             console.log(response)
             switch (response.status) {
                 case 200:
-                    response.json().then(data => {
+                    response.json().then((data) => {
                         onSuccess(data);
                     });
                     break;

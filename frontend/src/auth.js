@@ -1,18 +1,17 @@
 import {fetchPost, apiFetch, login} from './requests.js'
 import  {displayPopup} from './helpers.js'
 import  {showChannelPage} from './channels.js'
+import {TOKEN} from './main.js'
 
 
 
-let TOKEN = null;
 let isLoggedIn = false;
 
 export const storeToken = (token) => {
-    TOKEN = token;
     isLoggedIn = true;
-    localStorage.setItem("slacker-token", TOKEN);
+    localStorage.setItem("slacker-token", token);
     console.log("saved token")
-    console.log(TOKEN)
+    console.log(token)
     console.log("From local storage:" + localStorage.getItem("slacker-token"));
 };
 
