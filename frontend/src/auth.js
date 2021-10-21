@@ -1,5 +1,5 @@
 import {fetchPost, apiFetch, login} from './requests.js'
-import  {displayPopup} from './helpers.js'
+import  {displayPopup, saveUserIDToLocal, saveTokenToLocal, removeAuthData, getTokenFromLocal} from './helpers.js'
 import  {showChannelPage} from './channels.js'
 import {TOKEN} from './main.js'
 
@@ -7,14 +7,15 @@ import {TOKEN} from './main.js'
 
 let isLoggedIn = false;
 
-export const storeToken = (token) => {
-    isLoggedIn = true;
-    localStorage.setItem("slacker-token", token);
-    console.log("saved token")
-    console.log(token)
-    console.log("From local storage:" + localStorage.getItem("slacker-token"));
-};
+const saveAuthData = (token, id) => {
+    saveTokenToLocal(token);
+    saveUserIDToLocal(id);
+}
 
+export const showAuthPage = () => {
+    document.getElementById("auth-page").style.display = 'block';
+    document.getElementById('main-page').style.display = 'none';
+}
 
 /*
         AUTH/LOGIN
@@ -28,12 +29,15 @@ document.getElementById("LoginBtn").addEventListener('click', (e) => {
         password : password,
     }
 
-    const onSuccess = (data) => {
-        storeToken(data['token']);
-        showChannelPage();
-    }
 
-    apiFetch('POST', 'auth/login', null, body, onSuccess);
+    apiFetch('POST', 'auth/login', null, body)
+    .then((data) => {
+        saveAuthData(data['token'], data['userId']);
+        showChannelPage();
+    })
+    .catch((errorMsg) => {
+        displayPopup(errorMsg)
+    });
 
 })
 
@@ -92,7 +96,7 @@ document.getElementById("RegisterBtn").addEventListener('click', () => {
 
     const onSuccess = (data) => {
         console.log(data['token']);
-        storeToken(data['token']);
+        saveAuthData(data['token'], data['userId']);
         isLoggedIn = true;
         showChannelPage();
         
@@ -117,25 +121,19 @@ document.getElementById("confirmPassword").addEventListener('blur', () => {
 /*
         AUTH/LOGOUT
 */
-/*
-document.getElementById("LogoutBtn").addEventListener('click', () => {
-    fetch('http://localhost:5005/auth/logout').then((response) => {
-        switch (response.status) {
-            case 200:
-                console.log("Successfully logged out")
-                document.getElementById("page-login").style.display = "block"
-                 document.getElementById("page-register").style.display = "none"
-                // welcome page
-                break;
-            case 400:
-                response.json().then((data) => {
-                    console.log("Error")
-                });
-                break;
-        }
-    });
-});
-*/
+export const setLogoutBtnEventListener = () => {
+    document.getElementById("LogoutBtn").addEventListener('click', () => {
+        console.log("logging out")
+
+        apiFetch('POST','auth/logout', getTokenFromLocal(), null)
+        .then((data) => {
+            removeAuthData();
+            showAuthPage();
+        });
+    
+    });    
+}
+
 
 document.getElementById("showPassword").addEventListener('click', () => {
     document.getElementById('Login-password').type = 'text'

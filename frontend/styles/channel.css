@@ -25,3 +25,34 @@
 .focusedChannelMessages {
     display: none;
 }
+
+.change-channel-name {
+    border: none;
+    appearance: none;
+    outline: none;
+    font-size: 2.5rem;
+    margin-bottom: .5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-top: 0;
+    padding: 0;
+    width: auto;
+}
+
+.channel-page-header {
+    height: 70px;
+}
+
+.change-channel-des {
+    border: none;
+    appearance: none;
+    outline: none;
+    font-size: 1rem;
+    margin-bottom: .5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-top: 0;
+    padding: 0;
+    width: auto;
+}
+

@@ -8,6 +8,14 @@
       "image": null,
       "sessionActive": true
     },
+    "20741": {
+      "email": "alper@email.com",
+      "name": "Alper",
+      "password": "123",
+      "bio": null,
+      "image": null,
+      "sessionActive": true
+    },
     "23167": {
       "email": "mia@email.com",
       "name": "Mia",
@@ -23,9 +31,44 @@
       "bio": null,
       "image": null,
       "sessionActive": true
+    },
+    "40475": {
+      "email": "kennan1@email.com",
+      "name": "Kennan",
+      "password": "123",
+      "bio": null,
+      "image": null,
+      "sessionActive": true
+    },
+    "43377": {
+      "email": "reece@email.com",
+      "name": "Reece",
+      "password": "1",
+      "bio": null,
+      "image": null,
+      "sessionActive": true
+    },
+    "91731": {
+      "email": "kennan@email.com",
+      "name": "Kennan",
+      "password": "1",
+      "bio": null,
+      "image": null,
+      "sessionActive": true
     }
   },
   "channels": {
+    "158094": {
+      "name": "new channel",
+      "creator": 20741,
+      "private": {},
+      "description": "",
+      "createdAt": "2021-10-20T06:58:32.935Z",
+      "members": [
+        20741
+      ],
+      "messages": []
+    },
     "201465": {
       "name": "kennans private channel",
       "creator": 24730,
@@ -37,15 +80,27 @@
       ],
       "messages": []
     },
+    "220919": {
+      "name": "kennans private channel",
+      "creator": 91731,
+      "private": true,
+      "description": "",
+      "createdAt": "2021-10-20T15:41:54.436Z",
+      "members": [
+        91731
+      ],
+      "messages": []
+    },
     "427775": {
       "name": "public channel",
       "creator": 23167,
       "private": false,
-      "description": "",
+      "description": "new description",
       "createdAt": "2021-10-19T03:55:51.617Z",
       "members": [
         23167,
-        16736
+        16736,
+        91731
       ],
       "messages": [
         {
@@ -470,25 +525,44 @@
         }
       ]
     },
-    "700602": {
-      "name": "kennan public channel",
-      "creator": 24730,
-      "private": {},
+    "521919": {
+      "name": "test",
+      "creator": 91731,
+      "private": false,
+      "description": "a description",
+      "createdAt": "2021-10-20T15:54:09.977Z",
+      "members": [],
+      "messages": []
+    },
+    "620201": {
+      "name": "kennans channel",
+      "creator": 91731,
+      "private": false,
       "description": "",
-      "createdAt": "2021-10-19T03:58:41.190Z",
+      "createdAt": "2021-10-20T15:37:08.949Z",
       "members": [
-        24730
+        91731
       ],
       "messages": []
     },
-    "797989": {
-      "name": "kennans public channel",
-      "creator": 24730,
-      "private": {},
+    "651577": {
+      "name": "new private channel",
+      "creator": 91731,
+      "private": true,
       "description": "",
-      "createdAt": "2021-10-19T03:58:52.048Z",
+      "createdAt": "2021-10-20T15:42:48.848Z",
+      "members": [],
+      "messages": []
+    },
+    "883646": {
+      "name": "alpers channel",
+      "creator": 20741,
+      "private": false,
+      "description": "",
+      "createdAt": "2021-10-20T07:02:53.105Z",
       "members": [
-        24730
+        20741,
+        91731
       ],
       "messages": []
     }

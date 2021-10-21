@@ -8,3 +8,21 @@ html, body {
     font-family: -apple-system, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+.page-header {
+    padding: 15px;
+}
+
+
+.main-page {
+    height: 100%;
+    position: static;
+    width: 100%;
+}
+
+.viewport {
+    width: 100%;
+}
+
+.viewport-footer {
+    position: absolute;
+}

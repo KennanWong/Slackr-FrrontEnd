@@ -1,0 +1,67 @@
+
+.message-item-container {
+    padding-left: 15px;
+    display: grid;
+    width: 100%;
+    height: auto;
+    grid-template-columns: 9fr 1fr;
+}
+
+.message-item-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: auto;
+    height: 50px;
+}
+
+.default-profile {
+    font-size: 2rem;
+}
+
+
+.icon-tools {
+    font-size: 1rem;
+}
+
+.messages-container {
+    height: 100%;
+    width: auto;
+    background-color: #B6C5CE;
+    display: 'flex';
+    flex-direction: column;
+    border-radius: 4px;
+    border: 2px solid #101518;
+}  
+
+.sentDate {
+    padding-top: auto;
+    padding-bottom: auto;
+    text-align: right;
+}
+
+.sentTime {
+    padding-top: auto;
+    padding-bottom: auto;
+    text-align: center;
+}
+
+.send-message-container {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    height: 20%;
+}
+
+.send-message-text {
+    border: none;
+    appearance: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+}
+
+.send-message {
+    padding: auto;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}

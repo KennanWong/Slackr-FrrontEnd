@@ -27,3 +27,27 @@
 .addCursor:hover {
     cursor: pointer;
 }
+
+.flex-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.flex {
+    display: flex;
+    align-items: baseline;
+}
+
+.bi-check-lg {
+    font-size: 2rem;
+    cursor: pointer;
+    color: #1b5e20;
+}
+
+.bi-x {
+    font-size: 2rem;
+    cursor: pointer;
+    color: #b71c1c;
+    font-weight: 500;
+}
