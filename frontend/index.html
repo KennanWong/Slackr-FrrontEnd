@@ -152,9 +152,9 @@
           <div class="col">
             <h1>Channels</h1>            
           </div>
-          <div class="col-9" id="focusedChannelHeader">
-            <div id = 'displayChannelDetails'>
-              <div class="flex-space-between">
+          <div class="col-9" id="focused-channel-header">
+            <div >
+              <div class="flex-space-between" id = "channel-details-header">
                 <div id = "channelHeaderInfo" class="flex">
                   <h1 id="focusedChannelName"></h1>
                   <i id="privateStatus"></i>
@@ -225,7 +225,7 @@
               <h5>Click on a channel to view messages</h5>
             </div>
             <div id="message-nav-container" style="display: none;" >
-              <nav aria-label="Page navigation example" id="message-nav">
+              <nav aria-label="Page navigation" id="message-nav">
                 <ul class="pagination" id="message-pages">
                   <li class="page-item">
                     <a class="page-link" href="#" aria-label="Previous">
@@ -240,6 +240,7 @@
                 </ul>
               </nav>
             </div>
+            <div id="send-message-wrapper"></div>
           </div>
         </div>
       </div>

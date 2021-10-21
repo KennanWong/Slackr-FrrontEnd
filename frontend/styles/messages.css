@@ -1,4 +1,8 @@
 
+.message-item-wrapper {
+    
+}
+
 .message-item-container {
     padding-left: 15px;
     display: grid;
@@ -21,6 +25,10 @@
 
 .icon-tools {
     font-size: 1rem;
+}
+
+.icon-tools:hover {
+    cursor: pointer;
 }
 
 .messages-container {
@@ -46,9 +54,11 @@
 }
 
 .send-message-container {
+    border-radius: 4px;
+    border: 2px solid #101518;
     display: grid;
     grid-template-columns: 5fr 1fr;
-    height: 20%;
+    height: 100px;
 }
 
 .send-message-text {
@@ -59,9 +69,30 @@
     height: 100%;
 }
 
-.send-message {
+.send-message-bt {
     padding: auto;
     height: 100%;
     width: 100%;
     text-align: center;
+}
+
+.edit-message {
+    border: none;
+    appearance: none;
+    outline: none;
+}
+
+.message-item-footer {
+
+}
+
+.react-options {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 5px;
+}
+
+p {
+    margin-bottom: 0;
 }

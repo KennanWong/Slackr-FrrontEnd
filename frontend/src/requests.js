@@ -38,7 +38,6 @@ export const apiFetch = (method, route, TOKEN, body) => {
     }
 
     if (TOKEN !== null) {
-        console.log("added token")
         requestOptions.headers['Authorization'] = `Bearer ${TOKEN}`;
     } else {
         console.log("empty token")
@@ -47,7 +46,7 @@ export const apiFetch = (method, route, TOKEN, body) => {
     return new Promise ((resolve, reject) => {
         fetch(`http://localhost:5005/${route}`, requestOptions)
         .then((response) => {
-            console.log(response)
+
             switch (response.status) {
                 case 200:
                     response.json().then((data) => {

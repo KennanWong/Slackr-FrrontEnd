@@ -1,5 +1,5 @@
 import {fetchPost, apiFetch, login} from './requests.js'
-import  {displayPopup, saveUserIDToLocal, saveTokenToLocal, removeAuthData, getTokenFromLocal} from './helpers.js'
+import  {displayPopup, saveUserIDToLocal, saveTokenToLocal, removeAuthData, getTokenFromLocal, removeAllChildNodes} from './helpers.js'
 import  {showChannelPage} from './channels.js'
 import {TOKEN} from './main.js'
 
@@ -125,11 +125,20 @@ export const setLogoutBtnEventListener = () => {
     document.getElementById("LogoutBtn").addEventListener('click', () => {
         console.log("logging out")
 
-        apiFetch('POST','auth/logout', getTokenFromLocal(), null)
+        apiFetch('POST','auth/logout', getTokenFromLocal(), {})
         .then((data) => {
             removeAuthData();
             showAuthPage();
-        });
+            // Reset main page header
+            const mainPageHeader = document.getElementById('main-page-header');
+            removeAllChildNodes(mainPageHeader);
+            const slackrLogo = document.createElement('h1');
+            slackrLogo.appendChild(document.createTextNode("Slackr"));
+            mainPageHeader.appendChild(slackrLogo);
+        })
+        .catch((errorMsg) => {
+            displayPopup(errorMsg);
+        })
     
     });    
 }

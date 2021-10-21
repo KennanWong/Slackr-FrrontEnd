@@ -51,3 +51,11 @@
     color: #b71c1c;
     font-weight: 500;
 }
+
+.active {
+    display: 'block';
+}
+
+.disabled {
+    display: none;
+}

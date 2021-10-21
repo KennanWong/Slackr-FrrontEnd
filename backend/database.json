@@ -30,7 +30,7 @@
       "password": "1",
       "bio": null,
       "image": null,
-      "sessionActive": true
+      "sessionActive": false
     },
     "40475": {
       "email": "kennan1@email.com",
@@ -46,7 +46,7 @@
       "password": "1",
       "bio": null,
       "image": null,
-      "sessionActive": true
+      "sessionActive": false
     },
     "91731": {
       "email": "kennan@email.com",
@@ -69,15 +69,22 @@
       ],
       "messages": []
     },
+    "184850": {
+      "name": "test private channel 2",
+      "creator": 24730,
+      "private": true,
+      "description": "|",
+      "createdAt": "2021-10-21T14:20:05.514Z",
+      "members": [],
+      "messages": []
+    },
     "201465": {
       "name": "kennans private channel",
       "creator": 24730,
       "private": {},
       "description": "",
       "createdAt": "2021-10-19T03:58:22.159Z",
-      "members": [
-        24730
-      ],
+      "members": [],
       "messages": []
     },
     "220919": {
@@ -89,6 +96,49 @@
       "members": [
         91731
       ],
+      "messages": [
+        {
+          "id": 99,
+          "message": "hi",
+          "image": "",
+          "sender": 91731,
+          "sentAt": "2021-10-21T15:42:24.625Z",
+          "edited": false,
+          "editedAt": null,
+          "pinned": false,
+          "reacts": []
+        },
+        {
+          "id": 98,
+          "message": "27",
+          "image": "",
+          "sender": 91731,
+          "sentAt": "2021-10-21T15:04:10.097Z",
+          "edited": false,
+          "editedAt": null,
+          "pinned": false,
+          "reacts": []
+        },
+        {
+          "id": 97,
+          "message": "edited this message",
+          "image": "",
+          "sender": 91731,
+          "sentAt": "2021-10-21T15:04:05.390Z",
+          "edited": true,
+          "editedAt": "2021-10-21T15:07:56.072Z",
+          "pinned": false,
+          "reacts": []
+        }
+      ]
+    },
+    "224145": {
+      "name": "test private channel",
+      "creator": 24730,
+      "private": true,
+      "description": "|",
+      "createdAt": "2021-10-21T14:19:15.987Z",
+      "members": [],
       "messages": []
     },
     "427775": {
@@ -100,9 +150,120 @@
       "members": [
         23167,
         16736,
-        91731
+        91731,
+        24730
       ],
       "messages": [
+        {
+          "id": 56,
+          "message": "still???",
+          "image": "",
+          "sender": 24730,
+          "sentAt": "2021-10-21T13:16:24.599Z",
+          "edited": false,
+          "editedAt": null,
+          "pinned": false,
+          "reacts": []
+        },
+        {
+          "id": 55,
+          "message": "why is it not working",
+          "image": "",
+          "sender": 24730,
+          "sentAt": "2021-10-21T13:16:17.589Z",
+          "edited": false,
+          "editedAt": null,
+          "pinned": false,
+          "reacts": []
+        },
+        {
+          "id": 54,
+          "message": "please create the new page",
+          "image": "",
+          "sender": 24730,
+          "sentAt": "2021-10-21T13:16:11.580Z",
+          "edited": false,
+          "editedAt": null,
+          "pinned": false,
+          "reacts": []
+        },
+        {
+          "id": 53,
+          "message": "side",
+          "image": "",
+          "sender": 24730,
+          "sentAt": "2021-10-21T13:15:26.787Z",
+          "edited": false,
+          "editedAt": null,
+          "pinned": false,
+          "reacts": []
+        },
+        {
+          "id": 52,
+          "message": "other",
+          "image": "",
+          "sender": 24730,
+          "sentAt": "2021-10-21T13:15:23.557Z",
+          "edited": false,
+          "editedAt": null,
+          "pinned": false,
+          "reacts": []
+        },
+        {
+          "id": 51,
+          "message": "the",
+          "image": "",
+          "sender": 24730,
+          "sentAt": "2021-10-21T13:15:20.067Z",
+          "edited": false,
+          "editedAt": null,
+          "pinned": false,
+          "reacts": []
+        },
+        {
+          "id": 50,
+          "message": "from\n",
+          "image": "",
+          "sender": 24730,
+          "sentAt": "2021-10-21T13:15:16.145Z",
+          "edited": false,
+          "editedAt": null,
+          "pinned": false,
+          "reacts": []
+        },
+        {
+          "id": 49,
+          "message": "hello",
+          "image": "",
+          "sender": 24730,
+          "sentAt": "2021-10-21T13:15:11.500Z",
+          "edited": false,
+          "editedAt": null,
+          "pinned": false,
+          "reacts": []
+        },
+        {
+          "id": 48,
+          "message": "hiiiiiiii guys",
+          "image": "",
+          "sender": 24730,
+          "sentAt": "2021-10-21T13:13:54.383Z",
+          "edited": false,
+          "editedAt": null,
+          "pinned": false,
+          "reacts": []
+        },
+        {
+          "id": 47,
+          "message": "kennan sent a message",
+          "image": "",
+          "sender": 24730,
+          "sentAt": "2021-10-21T13:11:27.245Z",
+          "edited": false,
+          "editedAt": null,
+          "pinned": false,
+          "reacts": []
+        },
         {
           "id": 42,
           "message": "yeah, i do! i just didn't think that you did",
@@ -531,6 +692,30 @@
       "private": false,
       "description": "a description",
       "createdAt": "2021-10-20T15:54:09.977Z",
+      "members": [
+        24730,
+        91731
+      ],
+      "messages": [
+        {
+          "id": 61,
+          "message": "test message",
+          "image": "",
+          "sender": 24730,
+          "sentAt": "2021-10-21T14:53:21.179Z",
+          "edited": false,
+          "editedAt": null,
+          "pinned": false,
+          "reacts": []
+        }
+      ]
+    },
+    "611955": {
+      "name": "private 5",
+      "creator": 24730,
+      "private": true,
+      "description": "|",
+      "createdAt": "2021-10-21T14:21:04.765Z",
       "members": [],
       "messages": []
     },
@@ -541,9 +726,23 @@
       "description": "",
       "createdAt": "2021-10-20T15:37:08.949Z",
       "members": [
-        91731
+        91731,
+        24730,
+        43377
       ],
-      "messages": []
+      "messages": [
+        {
+          "id": 45,
+          "message": "kennan was here and edited this message",
+          "image": "",
+          "sender": 91731,
+          "sentAt": "2021-10-21T12:26:13.645Z",
+          "edited": true,
+          "editedAt": "2021-10-21T16:24:00.764Z",
+          "pinned": false,
+          "reacts": []
+        }
+      ]
     },
     "651577": {
       "name": "new private channel",
@@ -551,6 +750,15 @@
       "private": true,
       "description": "",
       "createdAt": "2021-10-20T15:42:48.848Z",
+      "members": [],
+      "messages": []
+    },
+    "686477": {
+      "name": "test private channel 3",
+      "creator": 24730,
+      "private": true,
+      "description": "|",
+      "createdAt": "2021-10-21T14:20:29.016Z",
       "members": [],
       "messages": []
     },
@@ -562,10 +770,35 @@
       "createdAt": "2021-10-20T07:02:53.105Z",
       "members": [
         20741,
-        91731
+        91731,
+        43377,
+        24730
       ],
-      "messages": []
+      "messages": [
+        {
+          "id": 101,
+          "message": "kennan edited this message",
+          "image": "",
+          "sender": 91731,
+          "sentAt": "2021-10-21T16:11:16.767Z",
+          "edited": true,
+          "editedAt": "2021-10-21T16:13:19.321Z",
+          "pinned": false,
+          "reacts": []
+        },
+        {
+          "id": 100,
+          "message": "kennan left a message\n",
+          "image": "",
+          "sender": 91731,
+          "sentAt": "2021-10-21T16:11:09.185Z",
+          "edited": false,
+          "editedAt": null,
+          "pinned": false,
+          "reacts": []
+        }
+      ]
     }
   },
-  "nextMessageId": 43
+  "nextMessageId": 102
 }
