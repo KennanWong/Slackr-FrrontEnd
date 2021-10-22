@@ -106,7 +106,16 @@
           "edited": false,
           "editedAt": null,
           "pinned": false,
-          "reacts": []
+          "reacts": [
+            {
+              "user": 91731,
+              "react": "😍"
+            },
+            {
+              "user": 91731,
+              "react": "😄"
+            }
+          ]
         },
         {
           "id": 98,

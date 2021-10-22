@@ -241,6 +241,7 @@ export const createMessageItem = (message) => {
             RHScontainer.appendChild(reactIcon);
             newMsgContainer.appendChild(RHScontainer);
 
+            // Append the wrapper to the messages container
             messagesContainer.appendChild(newMsgWrapper);
 
             // Set up footer
@@ -250,9 +251,9 @@ export const createMessageItem = (message) => {
 
             // Hide react icons where mouse moves away from the react box
             newMsgWrapper.onmouseleave = () => {
-                removeAllChildNodes(messageFooter);
                 const msgContent = document.getElementById('message-content-'+message['id']);
                 msgContent.style.marginBottom = '1rem';
+                showReacts(message);
             }
 
             // Check if the message has been edited
@@ -277,6 +278,10 @@ export const createMessageItem = (message) => {
                     replaceTextContent('sentTime-'+ message['id'], timeString);
                 };
             }
+
+            // Display this messages reactions
+            showReacts(message);
+
             resolve(newMsgWrapper);
             
         })
@@ -412,6 +417,7 @@ const getMessageIndex = () => {
 }
 
 const displayReactOptions = (message) => {
+    // Build the react options in the DOM
     const msgContent = document.getElementById('message-content-'+message['id']);
     msgContent.style.marginBottom = '0';
     const msgFooter = document.getElementById('footer-'+message['id']);
@@ -419,13 +425,101 @@ const displayReactOptions = (message) => {
     const reactOptions = document.createElement('div');
     reactOptions.classList.add('react-options');
 
-    for (let i = 0; i < emojisList.length; i++) {
+    // Determine the users reactions
+    const userReacts = [];
+    const messageReacts = message['reacts'];
+    for (let i=0; i < messageReacts.length; i++) {
+        if (messageReacts[i]['user'] == getUserIDFromLocal()) {
+            userReacts.push(messageReacts[i]['react']);
+        }
+    }
+
+    for (let i = 0; i < reactEmojisList.length; i++) {
         const reactIcon = document.createElement('h5');
-        reactIcon.appendChild(document.createTextNode(emojisList[i]));
+        let onReact;
+        if (userReacts.includes(reactEmojisList[i])) {
+            // User has reacted
+            reactIcon.classList.add('reacted-icon');
+            onReact = (body) => {
+                apiFetch('POST', `message/unreact/${getFocusedChannelId()}/${message['id']}`,
+                        getTokenFromLocal(), body)
+                .then((data) => {
+                    showMessages(getFocusedChannelId(), getMessageIndex());
+                })
+                .catch((errorMsg) => {
+                    // displayPopup(errorMsg);
+                })
+            }
+        } else {
+            reactIcon.classList.add('react-icon');
+            onReact = (body) => {
+                apiFetch('POST', `message/react/${getFocusedChannelId()}/${message['id']}`,
+                        getTokenFromLocal(), body)
+                .then((data) => {
+                    showMessages(getFocusedChannelId(), getMessageIndex());
+                })
+                .catch((errorMsg) => {
+                    // displayPopup(errorMsg);
+                })
+            }
+        }
+        reactIcon.appendChild(document.createTextNode(reactEmojisList[i]));
         reactOptions.appendChild(reactIcon);
+        reactIcon.addEventListener('click', () => {
+            const body = {
+                react: reactEmojisList[i],
+            }
+
+            onReact(body);
+            
+        })
     }
     msgFooter.appendChild(reactOptions);
 
 }
 
-const emojisList = ['😄', '😍', '😢'];
+const showReacts = (message) => {
+    const msgFooter = document.getElementById('footer-'+message['id']);
+    removeAllChildNodes(msgFooter);
+    // Get the reacts to the channel and the number of reacts
+    const messageReacts = message['reacts'];
+    if (messageReacts.length == 0) {
+        return;
+    };
+
+    // Prepare container for reactions and remove margin
+    const reactsContainer = document.createElement('div');
+    reactsContainer.classList.add('message-reacts');
+    reactsContainer.id = 'message-reacts-' + message['id'];
+    const msgContent = document.getElementById('message-content-'+message['id']);
+    msgContent.style.marginBottom = '0';
+
+    // Create a map to keep count of the number of reacts
+    const reactsMap = new Map();
+    for (let i = 0; i < messageReacts.length; i++) {
+        const messageReact = messageReacts[i];
+        if (reactsMap.has(messageReact['react'])) {
+            reactsMap.set(messageReact['react'],(reactsMap.get(messageReact['react'])+1));
+        } else {
+            reactsMap.set(messageReact['react'], 1);
+        }
+    };
+
+    console.log(reactsMap);
+
+    // Display the channels reacts
+    for (let i = 0; i < reactEmojisList.length; i++) {
+        if (reactsMap.has(reactEmojisList[i])) {
+            const newReact = document.createElement('div');
+            newReact.classList.add('message-react-item');
+            newReact.appendChild(document.createTextNode(reactEmojisList[i]));
+            newReact.appendChild(document.createTextNode(reactsMap.get(reactEmojisList[i])));
+            reactsContainer.appendChild(newReact);
+        }
+    }
+
+    msgFooter.appendChild(reactsContainer);
+
+}
+
+const reactEmojisList = ['😄', '😍', '😢'];

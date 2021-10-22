@@ -90,9 +90,44 @@
     display: flex;
     align-items: baseline;
     justify-content: center;
-    gap: 5px;
+    gap: 10px;
+    height: 35px;
+}
+
+.react-icon {
+    display: flex;
+    align-items: baseline;
+    text-align: center;
+}
+
+.reacted-icon {
+    font-size: 20pt;
+    text-shadow: 0 3px 3px #274C77;
+}
+
+.reacted-icon:hover {
+    cursor: pointer;
+}
+
+.react-icon:hover {
+    cursor: pointer;
+    font-size: 20pt;
 }
 
 p {
     margin-bottom: 0;
+}
+
+.message-reacts {
+    display: flex;
+    gap: 5px;
+    padding-left: 15px;
+}
+
+.message-react-item {
+    display: flex;
+    background-color: #E7ECEF;
+    align-items: baseline;
+    border-radius: 5px;
+    padding: 2px;
 }

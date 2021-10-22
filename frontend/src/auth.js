@@ -36,7 +36,7 @@ document.getElementById("LoginBtn").addEventListener('click', (e) => {
         showChannelPage();
     })
     .catch((errorMsg) => {
-        displayPopup(errorMsg)
+        
     });
 
 })
