@@ -15,6 +15,8 @@ const saveAuthData = (token, id) => {
 export const showAuthPage = () => {
     document.getElementById("auth-page").style.display = 'block';
     document.getElementById('main-page').style.display = 'none';
+    document.getElementById("Login-email").value = null;
+    document.getElementById("Login-password").value = null;
 }
 
 /*
@@ -36,7 +38,7 @@ document.getElementById("LoginBtn").addEventListener('click', (e) => {
         showChannelPage();
     })
     .catch((errorMsg) => {
-        
+        displayPopup(errorMsg);
     });
 
 })

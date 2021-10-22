@@ -40,7 +40,11 @@
 }
 
 .channel-page-header {
-    height: 70px;
+    height: 60px;
+}
+
+.channel-page-header h1 {
+    font-size: 2.5rem;
 }
 
 .change-channel-des {
@@ -55,4 +59,25 @@
     padding: 0;
     width: auto;
 }
+.channel-details-header {
+    width: 100%;
+}
 
+.channel-details-header h1 {
+    font-size: 2rem;
+}
+
+.channels-list {
+    overflow-y: scroll;
+    max-height: 60vh;
+}
+
+.channels-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.channels-list::-webkit-scrollbar-thumb {
+    background-color: #0A141F;
+    border-radius: 30px;
+    border: 3px solid #ffffff;
+}

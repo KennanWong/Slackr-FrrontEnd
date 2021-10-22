@@ -62,9 +62,6 @@ document.getElementById("closeError").addEventListener('click', () => {
 });
 
 
-document.getElementById("ResetTKN").addEventListener('click', () => {
-    removeAuthData();
-})
 
 
 export const getTokenFromLocal = () => {
@@ -129,4 +126,29 @@ export const parseISOString = (s) => {
 
 export const padItem = (item, numPad) => {
     return String(item).padStart(numPad, '0');
+}
+
+export const createCheckBoxForm = (value) => {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('form-check');
+
+    const checkBox = document.createElement('input');
+    checkBox.type = "checkbox";
+    checkBox.classList.add("form-check-input");
+    checkBox.id = "checkbox-" + value;
+    wrapper.appendChild(checkBox);
+
+    const label = document.createElement('label');
+    label.for = checkBox.id;
+    label.classList.add('form-check-label');
+    label.appendChild(document.createTextNode(value));
+    wrapper.appendChild(label);
+
+    return wrapper;
+
+}
+
+export const removeEventListeners = (oldNode) => {
+    const cloneNode = oldNode.cloneNode(true);
+    oldNode.parentNode.replaceChild(cloneNode, oldNode); 
 }

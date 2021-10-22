@@ -149,12 +149,12 @@
     <div id="main-page" class="main-page" style="display: none;">
       <div id="channels">
         <div class="row channel-page-header">
-          <div class="col">
+          <div class="col flex">
             <h1>Channels</h1>            
           </div>
           <div class="col-9" id="focused-channel-header">
             <div >
-              <div class="flex-space-between" id = "channel-details-header">
+              <div class="flex-space-between channel-details-header" id = "channel-details-header">
                 <div id = "channelHeaderInfo" class="flex">
                   <h1 id="focusedChannelName"></h1>
                   <i id="privateStatus"></i>
@@ -172,7 +172,7 @@
         <hr>
         <div class="row">
           <div class="col">
-            <ul class="list-group" id="channelsList">
+            <ul class="list-group channels-list" id="channelsList">
             </ul>
             <hr>
             <div id="joinNewSlack">
@@ -212,14 +212,14 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary" id="Channel-create" data-bs-dismiss="modal">Create Channel</button>
+                      <button type="button" class="btn btn-primary" id="channel-create" data-bs-dismiss="modal">Create Channel</button>
                     </div>
                   </div>
                 </div>
               </div>  
             </div>
           </div>
-          <div class="col-9" id="messages-pane">
+          <div class="col-9" id="messages-pane" >
             <div class="landing-page" id="messages-container">
               <h4>Welcome Back!</h1>
               <h5>Click on a channel to view messages</h5>
@@ -245,12 +245,39 @@
         </div>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary" id="ResetTKN">ResetTKN</button>
+
     
   </main>
+  
   <footer class="viewport-footer">
-    <p>&copy; Slackr</p>
+    <div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="inviteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="inviteModalLabel">Invite users</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="inviteForm">
+              <div class="form-group" >
+                <label for="Channel-new-name">People to invite</label>
+                <div id="invite-user-list"></div>
+                
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="invite-users" data-bs-dismiss="modal">Invite</button>
+          </div>
+        </div>
+      </div>
+    </div>  
   </footer>
+  
+  
   <script type="module" src="src/requests.js"></script>
   <script type="module" src="src/main.js"></script>
   <script type="module" src="src/auth.js"></script>

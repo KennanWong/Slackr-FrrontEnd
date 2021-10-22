@@ -54,7 +54,9 @@ export const apiFetch = (method, route, TOKEN, body) => {
                     });
                     break;
                 case 400 :
-                    reject(response);
+                    response.json().then((data) => {
+                        reject(data['error']);
+                    });
                     break;
                 case 403:
                     response.json().then((data) => {

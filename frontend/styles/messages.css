@@ -1,21 +1,23 @@
 
-.message-item-wrapper {
-    
-}
 
 .message-item-container {
     padding-left: 15px;
-    display: grid;
+    padding-right: 15px;
+    padding-top: 5px;
+    display: flex;
     width: 100%;
     height: auto;
-    grid-template-columns: 9fr 1fr;
+    justify-content: space-between;
+    align-items: flex-start;
 }
+
 
 .message-item-header {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    width: auto;
+    width: 100%;
     height: 50px;
+    justify-content: space-between; 
 }
 
 .default-profile {
@@ -32,14 +34,32 @@
 }
 
 .messages-container {
-    height: 100%;
-    width: auto;
+    height: calc(100vh - 255px);
+    width: 100%;
     background-color: #B6C5CE;
-    display: 'flex';
+    display: flex;
     flex-direction: column;
     border-radius: 4px;
     border: 2px solid #101518;
+    
 }  
+
+.messages {
+    flex:1;
+    overflow: scroll;
+    overflow-x: hidden;
+    padding-bottom: 5px;
+}
+
+.messages::-webkit-scrollbar {
+    width: 10px;
+}
+
+.messages::-webkit-scrollbar-thumb {
+    background-color: #0A141F;
+    border-radius: 30px;
+    border: 3px solid #B6C5CE;
+}
 
 .sentDate {
     padding-top: auto;
@@ -58,7 +78,7 @@
     border: 2px solid #101518;
     display: grid;
     grid-template-columns: 5fr 1fr;
-    height: 100px;
+    height: auto;
 }
 
 .send-message-text {
@@ -68,6 +88,7 @@
     width: 100%;
     height: 100%;
 }
+
 
 .send-message-bt {
     padding: auto;
@@ -80,24 +101,29 @@
     border: none;
     appearance: none;
     outline: none;
-}
-
-.message-item-footer {
-
+    background-color: #E7ECEF;
 }
 
 .react-options {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: center;
     gap: 10px;
-    height: 35px;
+    height: 45px;
+    background-color: #E7ECEF;
+    border-radius: 5px;
+    border: 1px solid #101518;
+    margin-left: 30px;
+    margin-right: 30px;
+    box-shadow: 0 3px 3px #274C77;
 }
 
 .react-icon {
-    display: flex;
-    align-items: baseline;
-    text-align: center;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 15pt;
+    margin-bottom: 0;
 }
 
 .reacted-icon {
@@ -112,6 +138,7 @@
 .react-icon:hover {
     cursor: pointer;
     font-size: 20pt;
+    text-shadow: 0 3px 3px #274C77;
 }
 
 p {
@@ -120,8 +147,9 @@ p {
 
 .message-reacts {
     display: flex;
-    gap: 5px;
-    padding-left: 15px;
+    gap: 10px;
+    
+
 }
 
 .message-react-item {
@@ -131,3 +159,37 @@ p {
     border-radius: 5px;
     padding: 2px;
 }
+
+.focused-message {
+    background-color: #E7ECEF;
+    border-radius: 5px;
+    box-shadow: 0 5px 5px #274C77;
+    margin: 5px;
+    width: 100%;
+}
+
+.pinned-messages {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.pinned-messages-header {
+    padding-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: auto;
+}
+
+.pinned-messages-header h6 {
+    font-size: 15pt;
+}
+
+.pinned-messages-header h6:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+

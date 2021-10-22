@@ -1,6 +1,6 @@
 {
   "users": {
-    "16736": {
+    "51019": {
       "email": "sebastian@email.com",
       "name": "Sebastian",
       "password": "chickenonastick",
@@ -8,276 +8,52 @@
       "image": null,
       "sessionActive": true
     },
-    "20741": {
-      "email": "alper@email.com",
-      "name": "Alper",
-      "password": "123",
+    "71272": {
+      "email": "kennan@email.com",
+      "name": "Kennan",
+      "password": "1",
       "bio": null,
       "image": null,
-      "sessionActive": true
+      "sessionActive": false
     },
-    "23167": {
+    "76234": {
       "email": "mia@email.com",
       "name": "Mia",
       "password": "solongbouldercity",
       "bio": null,
       "image": null,
       "sessionActive": true
-    },
-    "24730": {
-      "email": "kennan@gmail.com",
-      "name": "Kennan",
-      "password": "1",
-      "bio": null,
-      "image": null,
-      "sessionActive": false
-    },
-    "40475": {
-      "email": "kennan1@email.com",
-      "name": "Kennan",
-      "password": "123",
-      "bio": null,
-      "image": null,
-      "sessionActive": true
-    },
-    "43377": {
-      "email": "reece@email.com",
-      "name": "Reece",
-      "password": "1",
-      "bio": null,
-      "image": null,
-      "sessionActive": false
-    },
-    "91731": {
-      "email": "kennan@email.com",
-      "name": "Kennan",
-      "password": "1",
-      "bio": null,
-      "image": null,
-      "sessionActive": true
     }
   },
   "channels": {
-    "158094": {
-      "name": "new channel",
-      "creator": 20741,
-      "private": {},
-      "description": "",
-      "createdAt": "2021-10-20T06:58:32.935Z",
+    "103387": {
+      "name": "Kennans private channel",
+      "creator": 71272,
+      "private": true,
+      "description": "|",
+      "createdAt": "2021-10-22T16:40:01.526Z",
       "members": [
-        20741
+        71272
       ],
       "messages": []
     },
-    "184850": {
-      "name": "test private channel 2",
-      "creator": 24730,
-      "private": true,
-      "description": "|",
-      "createdAt": "2021-10-21T14:20:05.514Z",
-      "members": [],
-      "messages": []
-    },
-    "201465": {
-      "name": "kennans private channel",
-      "creator": 24730,
-      "private": {},
-      "description": "",
-      "createdAt": "2021-10-19T03:58:22.159Z",
-      "members": [],
-      "messages": []
-    },
-    "220919": {
-      "name": "kennans private channel",
-      "creator": 91731,
-      "private": true,
-      "description": "",
-      "createdAt": "2021-10-20T15:41:54.436Z",
-      "members": [
-        91731
-      ],
-      "messages": [
-        {
-          "id": 99,
-          "message": "hi",
-          "image": "",
-          "sender": 91731,
-          "sentAt": "2021-10-21T15:42:24.625Z",
-          "edited": false,
-          "editedAt": null,
-          "pinned": false,
-          "reacts": [
-            {
-              "user": 91731,
-              "react": "😍"
-            },
-            {
-              "user": 91731,
-              "react": "😄"
-            }
-          ]
-        },
-        {
-          "id": 98,
-          "message": "27",
-          "image": "",
-          "sender": 91731,
-          "sentAt": "2021-10-21T15:04:10.097Z",
-          "edited": false,
-          "editedAt": null,
-          "pinned": false,
-          "reacts": []
-        },
-        {
-          "id": 97,
-          "message": "edited this message",
-          "image": "",
-          "sender": 91731,
-          "sentAt": "2021-10-21T15:04:05.390Z",
-          "edited": true,
-          "editedAt": "2021-10-21T15:07:56.072Z",
-          "pinned": false,
-          "reacts": []
-        }
-      ]
-    },
-    "224145": {
-      "name": "test private channel",
-      "creator": 24730,
-      "private": true,
-      "description": "|",
-      "createdAt": "2021-10-21T14:19:15.987Z",
-      "members": [],
-      "messages": []
-    },
-    "427775": {
+    "486739": {
       "name": "public channel",
-      "creator": 23167,
+      "creator": 76234,
       "private": false,
-      "description": "new description",
-      "createdAt": "2021-10-19T03:55:51.617Z",
+      "description": "",
+      "createdAt": "2021-10-22T16:33:20.192Z",
       "members": [
-        23167,
-        16736,
-        91731,
-        24730
+        76234,
+        51019,
+        71272
       ],
       "messages": [
-        {
-          "id": 56,
-          "message": "still???",
-          "image": "",
-          "sender": 24730,
-          "sentAt": "2021-10-21T13:16:24.599Z",
-          "edited": false,
-          "editedAt": null,
-          "pinned": false,
-          "reacts": []
-        },
-        {
-          "id": 55,
-          "message": "why is it not working",
-          "image": "",
-          "sender": 24730,
-          "sentAt": "2021-10-21T13:16:17.589Z",
-          "edited": false,
-          "editedAt": null,
-          "pinned": false,
-          "reacts": []
-        },
-        {
-          "id": 54,
-          "message": "please create the new page",
-          "image": "",
-          "sender": 24730,
-          "sentAt": "2021-10-21T13:16:11.580Z",
-          "edited": false,
-          "editedAt": null,
-          "pinned": false,
-          "reacts": []
-        },
-        {
-          "id": 53,
-          "message": "side",
-          "image": "",
-          "sender": 24730,
-          "sentAt": "2021-10-21T13:15:26.787Z",
-          "edited": false,
-          "editedAt": null,
-          "pinned": false,
-          "reacts": []
-        },
-        {
-          "id": 52,
-          "message": "other",
-          "image": "",
-          "sender": 24730,
-          "sentAt": "2021-10-21T13:15:23.557Z",
-          "edited": false,
-          "editedAt": null,
-          "pinned": false,
-          "reacts": []
-        },
-        {
-          "id": 51,
-          "message": "the",
-          "image": "",
-          "sender": 24730,
-          "sentAt": "2021-10-21T13:15:20.067Z",
-          "edited": false,
-          "editedAt": null,
-          "pinned": false,
-          "reacts": []
-        },
-        {
-          "id": 50,
-          "message": "from\n",
-          "image": "",
-          "sender": 24730,
-          "sentAt": "2021-10-21T13:15:16.145Z",
-          "edited": false,
-          "editedAt": null,
-          "pinned": false,
-          "reacts": []
-        },
-        {
-          "id": 49,
-          "message": "hello",
-          "image": "",
-          "sender": 24730,
-          "sentAt": "2021-10-21T13:15:11.500Z",
-          "edited": false,
-          "editedAt": null,
-          "pinned": false,
-          "reacts": []
-        },
-        {
-          "id": 48,
-          "message": "hiiiiiiii guys",
-          "image": "",
-          "sender": 24730,
-          "sentAt": "2021-10-21T13:13:54.383Z",
-          "edited": false,
-          "editedAt": null,
-          "pinned": false,
-          "reacts": []
-        },
-        {
-          "id": 47,
-          "message": "kennan sent a message",
-          "image": "",
-          "sender": 24730,
-          "sentAt": "2021-10-21T13:11:27.245Z",
-          "edited": false,
-          "editedAt": null,
-          "pinned": false,
-          "reacts": []
-        },
         {
           "id": 42,
           "message": "yeah, i do! i just didn't think that you did",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:52.172Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.358Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -286,8 +62,8 @@
         {
           "id": 41,
           "message": "do you like the music i'm playing?",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:52.164Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.355Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -296,8 +72,8 @@
         {
           "id": 40,
           "message": "well, it matters because if you're gonna give up your dream, i think it matters that you like what you're playing on the road for years",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:52.146Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.350Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -306,8 +82,8 @@
         {
           "id": 39,
           "message": "i don't... i don't know what it matters",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:52.139Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.346Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -316,8 +92,8 @@
         {
           "id": 38,
           "message": "do you like the music you're playing?",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:52.132Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.342Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -326,8 +102,8 @@
         {
           "id": 37,
           "message": "yeah it'll be, this is it. i mean, this is it. it could feasibly be ever. i could be on tour with this... for a couple years at least, just this record",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:52.123Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.339Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -336,8 +112,8 @@
         {
           "id": 36,
           "message": "um... no, that's not really what i mean. i just mean that you, i mean, you're gonna be on tour for what? months now? years?",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:52.116Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.335Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -346,8 +122,8 @@
         {
           "id": 35,
           "message": "you didn't think it would be successful",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:52.093Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.332Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -356,8 +132,8 @@
         {
           "id": 34,
           "message": "i don't... i hadn't really thought it through. i didn't know that the band... was so important",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:52.085Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.329Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -366,8 +142,8 @@
         {
           "id": 33,
           "message": "i mean, what did you think i was gonna do?",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:52.061Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.325Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -376,8 +152,8 @@
         {
           "id": 32,
           "message": "i mean the long haul, like you're gonna stay in this band... for a long time... on tour",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:52.054Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.322Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -386,8 +162,8 @@
         {
           "id": 31,
           "message": "what do you mean \"the long haul\"?",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:52.023Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.318Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -396,8 +172,8 @@
         {
           "id": 30,
           "message": "so it's like the long haul?",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.991Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.314Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -406,8 +182,8 @@
         {
           "id": 29,
           "message": "you know, we tour so we can make the record so we can go back and tour the record",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:51.975Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.309Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -416,8 +192,8 @@
         {
           "id": 28,
           "message": "but after we finish, we're gonna go to record and then we'll go back on tour",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:51.967Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.304Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -426,8 +202,8 @@
         {
           "id": 27,
           "message": "when are you finished with the whole tour?",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.960Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.301Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -436,8 +212,8 @@
         {
           "id": 26,
           "message": "what do you mean? i mean...",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:51.951Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.298Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -446,8 +222,8 @@
         {
           "id": 25,
           "message": "i know, but when are you done?",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.943Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.294Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -456,8 +232,8 @@
         {
           "id": 24,
           "message": "we're just gonna have to try and see each other, y'know, so that we see each other",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:51.936Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.291Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -466,8 +242,8 @@
         {
           "id": 23,
           "message": "but... i wish i could",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.928Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.288Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -476,8 +252,8 @@
         {
           "id": 22,
           "message": "well...",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:51.919Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.285Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -486,8 +262,8 @@
         {
           "id": 21,
           "message": "the best idea right now",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.911Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.281Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -496,8 +272,8 @@
         {
           "id": 20,
           "message": "okay",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:51.904Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.278Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -506,8 +282,8 @@
         {
           "id": 19,
           "message": "so i don't really think that would be...",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.897Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.274Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -516,8 +292,8 @@
         {
           "id": 18,
           "message": "um... well all my stuff is here and it's in two weeks",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.889Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.270Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -526,8 +302,8 @@
         {
           "id": 17,
           "message": "i mean... i guess",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:51.883Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.266Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -536,8 +312,8 @@
         {
           "id": 16,
           "message": "...anywhere you are?",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.874Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.262Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -546,8 +322,8 @@
         {
           "id": 15,
           "message": "yeah, but can't you rehearse anywhere?",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:51.866Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.257Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -556,8 +332,8 @@
         {
           "id": 14,
           "message": "cause i have to rehearse",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.858Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.253Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -566,8 +342,8 @@
         {
           "id": 13,
           "message": "yeah",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:51.850Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.247Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -576,8 +352,8 @@
         {
           "id": 12,
           "message": "come to boise?",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.842Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.243Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -586,8 +362,8 @@
         {
           "id": 11,
           "message": "why can't you?",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:51.834Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.239Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -596,8 +372,8 @@
         {
           "id": 10,
           "message": "what are you doing after the tour?",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.826Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.234Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -606,8 +382,8 @@
         {
           "id": 9,
           "message": "oh, that would be... really exciting. i wish i could",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.818Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.229Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -616,8 +392,8 @@
         {
           "id": 8,
           "message": "yeah, you can knock that off your bucketlist",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:51.809Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.225Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -626,8 +402,8 @@
         {
           "id": 7,
           "message": "to boise?",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.801Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.221Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -636,8 +412,8 @@
         {
           "id": 6,
           "message": "you should come",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:51.792Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.218Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -646,8 +422,8 @@
         {
           "id": 5,
           "message": "to boise!",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.784Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.215Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -656,8 +432,8 @@
         {
           "id": 4,
           "message": "boise",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:51.774Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.211Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -666,8 +442,8 @@
         {
           "id": 3,
           "message": "boise?",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.741Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.209Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -676,8 +452,8 @@
         {
           "id": 2,
           "message": "yeah, 6:45. boise",
-          "sender": 16736,
-          "sentAt": "2021-10-19T03:55:51.712Z",
+          "sender": 51019,
+          "sentAt": "2021-10-22T16:33:20.206Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -686,8 +462,8 @@
         {
           "id": 1,
           "message": "when do you leave? in the morning?",
-          "sender": 23167,
-          "sentAt": "2021-10-19T03:55:51.679Z",
+          "sender": 76234,
+          "sentAt": "2021-10-22T16:33:20.202Z",
           "edited": false,
           "editedAt": null,
           "pinned": false,
@@ -695,119 +471,17 @@
         }
       ]
     },
-    "521919": {
-      "name": "test",
-      "creator": 91731,
+    "810710": {
+      "name": "kennans public channel",
+      "creator": 71272,
       "private": false,
-      "description": "a description",
-      "createdAt": "2021-10-20T15:54:09.977Z",
+      "description": "helloooooooooooooo",
+      "createdAt": "2021-10-22T16:40:15.567Z",
       "members": [
-        24730,
-        91731
+        71272
       ],
-      "messages": [
-        {
-          "id": 61,
-          "message": "test message",
-          "image": "",
-          "sender": 24730,
-          "sentAt": "2021-10-21T14:53:21.179Z",
-          "edited": false,
-          "editedAt": null,
-          "pinned": false,
-          "reacts": []
-        }
-      ]
-    },
-    "611955": {
-      "name": "private 5",
-      "creator": 24730,
-      "private": true,
-      "description": "|",
-      "createdAt": "2021-10-21T14:21:04.765Z",
-      "members": [],
       "messages": []
-    },
-    "620201": {
-      "name": "kennans channel",
-      "creator": 91731,
-      "private": false,
-      "description": "",
-      "createdAt": "2021-10-20T15:37:08.949Z",
-      "members": [
-        91731,
-        24730,
-        43377
-      ],
-      "messages": [
-        {
-          "id": 45,
-          "message": "kennan was here and edited this message",
-          "image": "",
-          "sender": 91731,
-          "sentAt": "2021-10-21T12:26:13.645Z",
-          "edited": true,
-          "editedAt": "2021-10-21T16:24:00.764Z",
-          "pinned": false,
-          "reacts": []
-        }
-      ]
-    },
-    "651577": {
-      "name": "new private channel",
-      "creator": 91731,
-      "private": true,
-      "description": "",
-      "createdAt": "2021-10-20T15:42:48.848Z",
-      "members": [],
-      "messages": []
-    },
-    "686477": {
-      "name": "test private channel 3",
-      "creator": 24730,
-      "private": true,
-      "description": "|",
-      "createdAt": "2021-10-21T14:20:29.016Z",
-      "members": [],
-      "messages": []
-    },
-    "883646": {
-      "name": "alpers channel",
-      "creator": 20741,
-      "private": false,
-      "description": "",
-      "createdAt": "2021-10-20T07:02:53.105Z",
-      "members": [
-        20741,
-        91731,
-        43377,
-        24730
-      ],
-      "messages": [
-        {
-          "id": 101,
-          "message": "kennan edited this message",
-          "image": "",
-          "sender": 91731,
-          "sentAt": "2021-10-21T16:11:16.767Z",
-          "edited": true,
-          "editedAt": "2021-10-21T16:13:19.321Z",
-          "pinned": false,
-          "reacts": []
-        },
-        {
-          "id": 100,
-          "message": "kennan left a message\n",
-          "image": "",
-          "sender": 91731,
-          "sentAt": "2021-10-21T16:11:09.185Z",
-          "edited": false,
-          "editedAt": null,
-          "pinned": false,
-          "reacts": []
-        }
-      ]
     }
   },
-  "nextMessageId": 102
+  "nextMessageId": 44
 }
