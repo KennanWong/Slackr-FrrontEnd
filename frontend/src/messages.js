@@ -8,6 +8,7 @@ const defaultNumMsgs = 10;
 // Swap the landing page view to the messages page
 export const swapView = () => {
     const messagesPane = document.getElementById('messages-pane');
+    messagesPane.style.maxWidth = '100%';
     removeAllChildNodes(messagesPane);
     console.log("removed child nodes")
 
@@ -30,63 +31,12 @@ export const swapView = () => {
     messagesContainer.appendChild(messages);
     console.log("created messages");
 
-    const messageNavContainer = document.createElement('div');
-    messageNavContainer.id = 'message-nav-container';
-    messagesPane.appendChild(messageNavContainer);
-    console.log("created messagesNavContainer");
 
-    const messageNav = document.createElement('nav');
-    messageNav.id = 'message-nav';
-    messageNavContainer.appendChild(messageNav);
-    console.log("created messagesNav");
-
-    const pagination = document.createElement('ul');
-    pagination.classList.add('pagination');
-    pagination.id = "message-pages";
-    messageNav.appendChild(pagination);
-    console.log("created pagination");
-
-    /*
-    const messagesContainer = document.getElementById('messages-container')
-    console.log("swapping pages")
-    removeAllChildNodes(messagesContainer);
-    messagesContainer.classList.remove('landing-page')
-    messagesContainer.classList.add('messages-container')
-    const messageNav = document.getElementById('message-nav-container')
-    messageNav.style.display = 'block'
-    */
-    // Pull up the channels most recent 25 messages
-    // and create the page navbar
-
-    /*
-    apiFetch('GET', `message/${getFocusedChannelId()}?start=0`, getTokenFromLocal(), {})
-    .then ((data) => {
-        if (data['messages'].length !== 0) {
-            // Get total number of messages
-            // Create page navigation
-            createMessageNav(data['messages'].length, 0);
-            const messages = data['messages'].reverse();
-            for (let i =0 ; i < messages.length; i++) {
-                console.log(messages[i]);
-                createMessageItem(messages[i])
-                .then ((newMsg) => {
-                    messagesContainer.appendChild(newMsg);
-                })
-                .catch((errorMsg) => {
-                    displayPopup(errorMsg)
-                })
-            }
-
-        }
-    })
-    .catch((errorMsg) => {
-        displayPopup(errorMsg);
-    })
-    */
+    
     showMessages(getFocusedChannelId(), 0);
     // getChannelMessages();
-    const messagePages = document.getElementById("message-pages");
-    removeAllChildNodes(messagePages);
+    // const messagePages = document.getElementById("message-pages");
+    // removeAllChildNodes(messagePages);
 
     // Create the message send box
     createMessageSendBox();
@@ -102,7 +52,7 @@ export const showMessages = (channelId, startIndex) => {
 
     apiFetch('GET', `message/${channelId}?start=${startIndex}`, getTokenFromLocal(), {})
     .then ((data) => {
-        const messages = data['messages'].reverse();
+        const messages = data['messages'];
         const promiseList = [];
         // createMessageNav(data['messages'].length, startIndex);
         for (let i =0 ; i < messages.length; i++) {
@@ -112,7 +62,7 @@ export const showMessages = (channelId, startIndex) => {
         Promise.all(promiseList)
         .then ((messagesList) => {
             for (let i = 0; i < messagesList.length; i++) {
-                channelMessages.appendChild(messagesList[i]);
+                channelMessages.prepend(messagesList[i]);
                 showReacts(messages[i]);
             }
             setMessageIndex(messagesList.length);
@@ -322,6 +272,11 @@ export const createMessageItem = (message, onlyText) => {
                         focusOnMessage(message);
                         editMsg.focus();
 
+                        // swap out the icons
+                        const confirmEditBtn = createIcon('bi', 'bi-check2');
+                        confirmEditBtn.classList.add('icon-tools');
+                        RHScontainer.replaceChild(confirmEditBtn, editIcon);
+                        
                         // Give option to remove 
                         if (imageContent != "") {
                             const removeImage = () => {
@@ -334,36 +289,40 @@ export const createMessageItem = (message, onlyText) => {
                             removeImgBtn.classList.add('icon-tools');
                             attachIconFunction('image-wrapper-'+message['id'], removeImgBtn, removeImage);
                         }
-                    })
 
-                    
-                    editMsg.addEventListener('blur', () => {
-                        // messageContentWrapper.removeEventListener('mouseout');
-                        // messageContentWrapper.replaceChild(messageContent, editMsg);
-                        unFocusMessage(message);
-                        if ((editMsg.value != message['message'] && editMsg.value.length > 0) || removedImage) {
-                            // If the message has been edited send request
-                            console.log("editing this message");
-                            const body = {
-                                message: editMsg.value,
-                                image: imageSrc,
-                            }
-                            apiFetch('PUT', `message/${getFocusedChannelId()}/${message['id']}`, getTokenFromLocal(), body)
-                            .then((data) => {
+                        const confirmEdits = () => {
+                            // messageContentWrapper.replaceChild(messageContent, editMsg);
+                            unFocusMessage(message);
+                            if ((editMsg.value != message['message'] && editMsg.value.length > 0) || removedImage) {
+                                // If the message has been edited send request
+                                console.log("editing this message");
+                                const body = {
+                                    message: editMsg.value,
+                                    image: imageSrc,
+                                }
+                                apiFetch('PUT', `message/${getFocusedChannelId()}/${message['id']}`, getTokenFromLocal(), body)
+                                .then((data) => {
+                                    updateMessage(message['id']);
+                                })
+                                .catch((errorMsg) => {
+                                    displayPopup(errorMsg);
+                                })
+                            } else {   
                                 updateMessage(message['id']);
-                            })
-                            .catch((errorMsg) => {
-                                displayPopup(errorMsg);
-                            })
-                        } else {   
-                            updateMessage(message['id']);
+                            }
                         }
-                    })
-                    
-                    newMsgWrapper.addEventListener('mouseout', (e) => {
-                        console.log('outisde of msg wrapper');
+
+                        confirmEditBtn.addEventListener('click', () => {
+                            confirmEdits();
+                        })
+
+                        newMsgContainer.addEventListener('mouseleave', () => {
+                            console.log("mouse out");
+                        })
+                        
                     })
 
+                    
                     const removeIcon = createIcon('bi', 'bi-trash');
                     removeIcon.classList.add('icon-tools');
                     RHScontainer.appendChild(removeIcon);
@@ -430,7 +389,7 @@ export const createMessageItem = (message, onlyText) => {
 
 const createMessageSendBox = () => {
     const messagesPane = document.getElementById('messages-pane')
-
+    
     // create the send message container
     const sendMessageContainer = document.createElement('form');
     sendMessageContainer.classList.add('send-message-container');
@@ -838,6 +797,19 @@ const showPinnedMessages = () => {
     
 }
 
+const showNewMessage = () => {
+    const channelMessages = document.getElementById('messages');
+    apiFetch('GET', `message/${getFocusedChannelId()}/?start=${0}`, getTokenFromLocal(), {})
+    .then((data) => {
+        console.log(data['messages'][0]);
+        createMessageItem(data['messages'][0], false)
+        .then((messageItem) => {
+            channelMessages.append(messageItem);
+            createMessageSendBox();
+            channelMessages.scrollTop = channelMessages.scrollHeight;
+        })
+    })
+}
 
 const reactEmojisList = ['😄', '😍', '😢'];
 
