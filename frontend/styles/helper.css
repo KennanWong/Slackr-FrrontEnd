@@ -31,12 +31,12 @@
 .flex-space-between {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
 }
 
 .flex {
     display: flex;
-    align-items: baseline;
+    align-items: center;
 }
 
 .bi-check-lg {
@@ -58,4 +58,28 @@
 
 .disabled {
     display: none;
+}
+
+.border-bottom-input {
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 2px solid #0A141F;
+    appearance: none;
+    outline: none;
+    width: auto;
+}
+
+.borderless-input {
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 0px;
+    appearance: none;
+    outline: none;
+    width: auto;
+}
+
+.icon-wrapper {
+    display: flex;
 }

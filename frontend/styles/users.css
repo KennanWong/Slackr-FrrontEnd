@@ -1,0 +1,72 @@
+
+.user-info-header {
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic-small {
+    height: 32px;
+    width: 32px;
+    border-radius: 16px;
+    padding: 0px;
+}
+
+.profile-pic-medium {
+    height: 64px;
+    width: 64px;
+    border-radius: 32px;
+}
+
+.user-name:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.user-info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info-label {
+    font-size: 13pt;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+.user-info-content {
+    display: flex;
+    gap: 5px;
+    width: auto;
+}
+
+.user-email-input {
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 2px solid #0A141F;
+    appearance: none;
+    outline: none;
+    width: auto;
+}
+
+.user-info-body {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.name {
+    font-size: 1.5rem;
+}
+
+.bio {
+    font-size: 1rem;
+}
+
+
+.profile-pic:hover {
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
+    border: 3px solid #101518;    
+}

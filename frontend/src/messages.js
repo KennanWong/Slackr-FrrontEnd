@@ -1,5 +1,6 @@
 import { getFocusedChannelId } from "./channels.js";
-import { createIcon, displayPopup, getTokenFromLocal, getUserInfo, parseISOString, removeAllChildNodes,getUserIDFromLocal, replaceTextContent, padItem } from "./helpers.js"
+import { createIcon, displayPopup, getTokenFromLocal, parseISOString, removeAllChildNodes,getUserIDFromLocal, replaceTextContent, padItem, showUploadImgModal, getDateFromISO, getTimeFromISO, getImageFromSrc, showImage, attachIconFunction, removeAllClassItems, removeEventListeners } from "./helpers.js"
+import { displayUserInfo, getUserInfo, getUserProfilePic } from "./users.js"
 import { apiFetch } from "./requests.js";
 
 const defaultNumMsgs = 10;
@@ -195,45 +196,77 @@ export const createMessageItem = (message, onlyText) => {
             // Create the message sender details
             const messageSender = document.createElement('div');
             messageSender.classList.add('flex');
+            messageSender.style.gap = '5px';
 
             // Add profile picture
-            // default will be bootstrap icon
+            /*
             const defaultIcon = createIcon('bi', 'bi-person-circle')
             defaultIcon.classList.add('default-profile');
-            messageSender.appendChild(defaultIcon);
+            */
+            const profilePic = getUserProfilePic(userInfo['image'], 'small');
+            messageSender.appendChild(profilePic);
 
             // Add message sender name
             const senderName = document.createElement('h5')
+            senderName.classList.add('user-name');
             senderName.appendChild(document.createTextNode(userInfo['name']));
+            senderName.style.margin = '0px';
             messageSender.appendChild(senderName);
             messageHeader.appendChild(messageSender);
 
+            // Attach event listener to display userinfo modal
+            senderName.addEventListener('click', (e) => {
+                displayUserInfo(message['sender']);
+                console.log("displaying user info: ", message['sender']);
+            })
+
             // Create date message was sent
             const sentData = parseISOString(message['sentAt']);
-
             const sentTime = document.createElement('p');
             sentTime.id = 'sentTime-'+ message['id'];
-            const timeString = padItem(sentData.getHours(),2) + ":" + padItem(sentData.getMinutes(),2);
+            const timeString = getTimeFromISO(sentData);
             sentTime.classList.add('sentTime');
             sentTime.appendChild(document.createTextNode(timeString));
             messageHeader.appendChild(sentTime);
 
             const sentDate = document.createElement('p');
             sentDate.id = 'sentDate-'+ message['id'];
-            const dateString = padItem(sentData.getDate(), 2) + "/" 
-                                + padItem((sentData.getMonth()+1), 2) + "/" 
-                                + padItem(sentData.getFullYear(), 4);
+            const dateString = getDateFromISO(sentData);
             sentDate.classList.add('sentDate');
             sentDate.appendChild(document.createTextNode(dateString));
             messageHeader.appendChild(sentDate);
 
             LHScontainer.appendChild(messageHeader);
 
+            // Create the messageContentWrapper
+            const messageContentWrapper = document.createElement('div');
+            messageContentWrapper.id = 'message-content-wrapper-'+message['id'];
+            LHScontainer.appendChild(messageContentWrapper);
+
             // Get the message content
             const messageContent = document.createElement('p')
             messageContent.id = 'message-content-' + message['id'];
             messageContent.appendChild(document.createTextNode(message['message']));
-            LHScontainer.appendChild(messageContent);
+            messageContentWrapper.appendChild(messageContent);
+            
+            // Get the image content
+            const imageWrapper = document.createElement('div');
+            imageWrapper.id = 'image-wrapper-'+message['id'];
+            imageWrapper.classList.add('flex');
+            messageContentWrapper.appendChild(imageWrapper);
+            let imageSrc = message['image'];
+            let imageContent = "";
+            let removedImage = false;
+            // Get the image content
+            if ('image' in message && message['image'] != "") {
+                imageContent = getImageFromSrc(message['image'], 'image-thumbnail');
+                imageWrapper.appendChild(imageContent);
+
+                imageContent.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showImage(message['image'], message['message']);
+                });
+            }
             
             // Seperate lhs of main box
             const RHScontainer = document.createElement('div')
@@ -285,20 +318,35 @@ export const createMessageItem = (message, onlyText) => {
                     editIcon.addEventListener ('click', () => {
                         console.log("edit this message");
                         editMsg.value = message['message'];
-                        LHScontainer.replaceChild(editMsg, messageContent);
+                        messageContentWrapper.replaceChild(editMsg, messageContent);
                         focusOnMessage(message);
                         editMsg.focus();
+
+                        // Give option to remove 
+                        if (imageContent != "") {
+                            const removeImage = () => {
+                                imageWrapper.removeChild(imageContent);
+                                imageContent = "";
+                                removedImage = true;
+                                imageSrc = "";
+                            }
+                            const removeImgBtn = createIcon("bi", "bi-x-circle");
+                            removeImgBtn.classList.add('icon-tools');
+                            attachIconFunction('image-wrapper-'+message['id'], removeImgBtn, removeImage);
+                        }
                     })
 
+                    
                     editMsg.addEventListener('blur', () => {
+                        // messageContentWrapper.removeEventListener('mouseout');
+                        // messageContentWrapper.replaceChild(messageContent, editMsg);
                         unFocusMessage(message);
-                        LHScontainer.replaceChild(messageContent, editMsg);
-                        if (editMsg.value != message['message'] && editMsg.value.length > 0) {
+                        if ((editMsg.value != message['message'] && editMsg.value.length > 0) || removedImage) {
                             // If the message has been edited send request
                             console.log("editing this message");
                             const body = {
                                 message: editMsg.value,
-                                image: message['image'],
+                                image: imageSrc,
                             }
                             apiFetch('PUT', `message/${getFocusedChannelId()}/${message['id']}`, getTokenFromLocal(), body)
                             .then((data) => {
@@ -307,8 +355,14 @@ export const createMessageItem = (message, onlyText) => {
                             .catch((errorMsg) => {
                                 displayPopup(errorMsg);
                             })
+                        } else {   
+                            updateMessage(message['id']);
                         }
-                    });
+                    })
+                    
+                    newMsgWrapper.addEventListener('mouseout', (e) => {
+                        console.log('outisde of msg wrapper');
+                    })
 
                     const removeIcon = createIcon('bi', 'bi-trash');
                     removeIcon.classList.add('icon-tools');
@@ -351,12 +405,7 @@ export const createMessageItem = (message, onlyText) => {
                     editIcon.onmouseover = () => {
                         console.log("mouseover on: ", message['message']);
                         const editedAt = parseISOString(message['editedAt']);
-                        const editedMsg = "Edited: " + padItem(editedAt.getHours(), 2)
-                                        + ":" + padItem(editedAt.getMinutes(), 2)
-                                        + " " + padItem(editedAt.getDate(), 2) + "/" 
-                                        + padItem((editedAt.getMonth()+1), 2) + "/" 
-                                        + padItem(editedAt.getFullYear(), 4);
-
+                        const editedMsg = "Edited: " + getTimeFromISO(editedAt)+ " " + getDateFromISO(editedAt);
                         replaceTextContent('sentDate-'+ message['id'], editedMsg);
                         replaceTextContent('sentTime-'+ message['id'], " ");
                     };
@@ -388,12 +437,53 @@ const createMessageSendBox = () => {
     messagesPane.appendChild(sendMessageContainer);
     
     // Create the text space for sending message
-
-
     const sendMesageText = document.createElement('textarea');
+    sendMesageText.id = 'send-message-text';
     sendMesageText.classList.add('send-message-text');
     sendMesageText.placeholder = "Send a message";
     sendMessageContainer.appendChild(sendMesageText);
+
+    // Create space for attached image
+    const attachedImg = document.createElement('div');
+    attachedImg.classList.add('flex')
+    attachedImg.id = 'attached-img';
+
+    // Create the send image button
+    const sendImageBtn = document.createElement('button');
+    sendImageBtn.type = 'button';
+    sendImageBtn.classList.add('btn');
+    sendImageBtn.style.backgroundColor = '#e5466c';
+    sendImageBtn.classList.add('send-image-btn');
+    sendImageBtn.appendChild(createIcon('bi', 'bi-camera'));
+    sendMessageContainer.appendChild(sendImageBtn);
+
+    let sendImage = "";
+
+    sendImageBtn.addEventListener('click', () => {
+        showUploadImgModal()
+        .then((imgUrl) => {
+            sendImage = imgUrl;
+            removeAllChildNodes(attachedImg);
+            const imgThumb = getImageFromSrc(imgUrl, 'image-preview');
+            attachedImg.appendChild(imgThumb);
+            sendMessageContainer.replaceChild(attachedImg, sendImageBtn);
+
+            const removeImg = () => {
+                sendImage = "";
+                removeAllChildNodes(attachedImg);
+                sendMessageContainer.replaceChild(sendImageBtn, attachedImg);
+            }
+            
+            const removeImgBtn = createIcon("bi", "bi-x-circle");
+            removeImgBtn.classList.add('icon-tools');
+            attachIconFunction('attached-img', removeImgBtn, removeImg);
+
+        })
+        .catch((errorMsg) => {
+            displayPopup(errorMsg);
+        })
+    });
+    
 
     // Create the send button
     const sendMesageBtn = document.createElement('button');
@@ -407,10 +497,10 @@ const createMessageSendBox = () => {
     // Add event listener to sendbtn
     sendMesageBtn.addEventListener('click', () => {
         const msg = sendMesageText.value;
-        if (msg.length !== 0) {
+        if ((msg.length != 0) && (msg.indexOf(' ') != 0)) {
             const body = {
                 message: msg,
-                image: "",
+                image: sendImage,
             }
             apiFetch('POST', `message/${getFocusedChannelId()}`, getTokenFromLocal(), body)
             .then((data) => {

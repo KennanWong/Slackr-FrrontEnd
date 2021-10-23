@@ -13,6 +13,7 @@
   <link rel="stylesheet" type="text/css" media="screen" href="styles/helper.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="styles/channel.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="styles/messages.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/users.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="styles/provided.css" />
 
   <!-- Boostrap sylesheets-->
@@ -262,7 +263,7 @@
           <div class="modal-body">
             <form id="inviteForm">
               <div class="form-group" >
-                <label for="Channel-new-name">People to invite</label>
+                <label for="invite-user-list">People to invite</label>
                 <div id="invite-user-list"></div>
                 
               </div>
@@ -275,6 +276,57 @@
         </div>
       </div>
     </div>  
+    <div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="userInfoModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="userInfoModalLabel">User Profile</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id = "user-info-content">
+          </div>
+          <div class="modal-footer" id = "user-info-footer">
+            
+          </div>
+        </div>
+      </div>
+    </div> 
+    <div class="modal fade" id="uploadImgModal" tabindex="-1" role="dialog" aria-labelledby="uploadImgModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="uploadImgModalLabel">Upload an image</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id = "uploadImg-content">
+            <input type="file" id="img-uploaded" name="filename">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="uploadImg-btn" disabled>Upload</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div> 
+    <div class="modal fade" id="displayImgModal" tabindex="-1" role="dialog" aria-labelledby="displayImgModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="displayImgModalLabel"></h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id = "img-content">
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
   </footer>
   
   
@@ -283,6 +335,7 @@
   <script type="module" src="src/auth.js"></script>
   <script type="module" src="src/channels.js"></script>
   <script type="module" src="src/messages.js"></script>
+  <script type="module" src="src/users.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 

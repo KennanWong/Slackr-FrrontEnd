@@ -6,6 +6,7 @@ html, body {
     background-color: #E7ECEF;
     height: 100%;
     font-family: -apple-system, 'Open Sans', 'Helvetica Neue', sans-serif;
+    overflow-x: hidden;
 }
 
 .page-header {

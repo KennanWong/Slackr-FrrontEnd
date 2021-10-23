@@ -77,7 +77,7 @@
     border-radius: 4px;
     border: 2px solid #101518;
     display: grid;
-    grid-template-columns: 5fr 1fr;
+    grid-template-columns: 8fr 1fr 1fr;
     height: auto;
 }
 
@@ -148,8 +148,6 @@ p {
 .message-reacts {
     display: flex;
     gap: 10px;
-    
-
 }
 
 .message-react-item {
@@ -192,4 +190,22 @@ p {
     cursor: pointer;
 }
 
+.image-thumbnail {
+    height: 5%;
+    width: 5%;
+}
+
+.image-thumbnail:hover {
+    cursor: pointer;
+}
+
+.image-preview {
+    height: 50%;
+    width: 50%;
+}
+
+.image {
+    height: 100%;
+    width: 100%;
+}
 

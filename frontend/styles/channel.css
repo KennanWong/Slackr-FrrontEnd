@@ -26,12 +26,9 @@
     display: none;
 }
 
-.change-channel-name {
-    border: none;
-    appearance: none;
-    outline: none;
-    font-size: 2.5rem;
-    margin-bottom: .5rem;
+.channel-name {
+    font-size: 2rem;
+    margin-bottom: 0px;
     font-weight: 500;
     line-height: 1.2;
     margin-top: 0;

@@ -35,6 +35,7 @@ document.getElementById("LoginBtn").addEventListener('click', (e) => {
     apiFetch('POST', 'auth/login', null, body)
     .then((data) => {
         saveAuthData(data['token'], data['userId']);
+        savePasswordToLocal(password);
         showChannelPage();
     })
     .catch((errorMsg) => {
@@ -99,6 +100,7 @@ document.getElementById("RegisterBtn").addEventListener('click', () => {
     const onSuccess = (data) => {
         console.log(data['token']);
         saveAuthData(data['token'], data['userId']);
+        savePasswordToLocal(password);
         isLoggedIn = true;
         showChannelPage();
         
@@ -123,26 +125,24 @@ document.getElementById("confirmPassword").addEventListener('blur', () => {
 /*
         AUTH/LOGOUT
 */
-export const setLogoutBtnEventListener = () => {
-    document.getElementById("LogoutBtn").addEventListener('click', () => {
-        console.log("logging out")
 
-        apiFetch('POST','auth/logout', getTokenFromLocal(), {})
-        .then((data) => {
-            removeAuthData();
-            showAuthPage();
-            // Reset main page header
-            const mainPageHeader = document.getElementById('main-page-header');
-            removeAllChildNodes(mainPageHeader);
-            const slackrLogo = document.createElement('h1');
-            slackrLogo.appendChild(document.createTextNode("Slackr"));
-            mainPageHeader.appendChild(slackrLogo);
-        })
-        .catch((errorMsg) => {
-            displayPopup(errorMsg);
-        })
-    
-    });    
+export const logout = () => {
+    console.log("logging out")
+
+    apiFetch('POST','auth/logout', getTokenFromLocal(), {})
+    .then((data) => {
+        removeAuthData();
+        showAuthPage();
+        // Reset main page header
+        const mainPageHeader = document.getElementById('main-page-header');
+        removeAllChildNodes(mainPageHeader);
+        const slackrLogo = document.createElement('h1');
+        slackrLogo.appendChild(document.createTextNode("Slackr"));
+        mainPageHeader.appendChild(slackrLogo);
+    })
+    .catch((errorMsg) => {
+        displayPopup(errorMsg);
+    })   
 }
 
 
@@ -173,5 +173,10 @@ document.getElementById("Reg-hidePassword").addEventListener('click', () => {
     document.getElementById("Reg-hidePassword").style.display = 'none'
 });
 
+export const savePasswordToLocal = (password) => {
+    localStorage.setItem('slacker-password', password);
+}
 
-
+export const getPasswordFromLocal = () => {
+    return localStorage.getItem('slacker-password');
+}
