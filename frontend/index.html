@@ -29,38 +29,7 @@
     <h1>Slackr</h1>
   </header>
   <main role="main" class="viewport">
-    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errerModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="errorModalLabel">Error</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p id = "errorMsg"></p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>  
-    <div id="popUp" class="popUp" style="display: none;">
-      <div id="errorBox" class="errorBox">
-        <div class="errorHeader" >
-          <h1>Error</h1>
-          <div id="closeError" class="X" style="display: inline-flex; justify-content: flex-end; flex-grow: 0;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" fill="#000"/>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" fill="#000"/>
-            </svg>
-          </div>
-        </div>
-        <h2 class="errorMsg" id="errorMsg">Error msg</h2>    
-      </div>
-    </div>
+
     <div class="container" id="auth-page">
       <div id="page-login" class = "page-auth">
         <div class="auth-header">
@@ -147,21 +116,27 @@
         
       </div>
     </div>
-    <div id="main-page" class="main-page" style="display: none;">
-      <div id="channels">
+    <div id="main-page-desktop" class="main-page" style="display: none;">
+      <div id="channels-container">
         <div class="row channel-page-header">
-          <div class="col flex">
+          <div class="col flex" id="channelTitle">
             <h1>Channels</h1>            
           </div>
-          <div class="col-9" id="focused-channel-header">
-            <div >
+          <div class="col-9" id = "focused-channel-header-desktop">
+            <div id="focused-channel-header">
               <div class="flex-space-between channel-details-header" id = "channel-details-header">
-                <div id = "channelHeaderInfo" class="flex">
-                  <h1 id="focusedChannelName"></h1>
-                  <i id="privateStatus"></i>
+                <div id="channel-header-info-desktop">
+                  <div id = "channelHeaderInfo" class="flex">
+                    <h1 id="focusedChannelName"></h1>
+                    <i id="privateStatus"></i>
+                  </div>
                 </div>
-                <button type="button" class="btn btn-secondary" id="leaveChannelBtn" style="display: none;">Leave</button>
-                <button type="button" class="btn btn-secondary" id="joinChannelBtn" style="display: none;">Join</button>
+                <div id="chanel-header-buttons-desktop">
+                  <div id="chanel-header-buttons">
+                    <button type="button" class="btn btn-secondary" id="leaveChannelBtn" style="display: none;">Leave</button>
+                    <button type="button" class="btn btn-secondary" id="joinChannelBtn" style="display: none;">Join</button>
+                  </div>
+                </div>
               </div>
               <div class="flex-space-between" id = "channelDetailsFooter">
                 <h6 id="focusedChannelDescription" aria-placeholder="channel description"></h6>
@@ -172,69 +147,133 @@
         </div>
         <hr>
         <div class="row">
-          <div class="col">
-            <ul class="list-group channels-list" id="channelsList">
-            </ul>
-            <hr>
-            <div id="joinNewSlack">
-              <button type="button" id="newSlackBtn"  data-bs-toggle="modal" data-bs-target="#newChannelModal"  class="btn btn-outline-primary newChannelBtn">
-                <div class="newChannelBtn">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" fill="#000"/>
-                  </svg>
-                  Create a Channel
-                </div>  
-              </button>
-              <div class="modal fade" id="newChannelModal" tabindex="-1" role="dialog" aria-labelledby="newChannelModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="neChannelModalLabel">Create a new Channel</h5>
-                      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form id="newChannelForm">
-                        <div class="form-group">
-                          <label for="Channel-new-name">Channel Name</label>
-                          <input type="text" class="form-control" id="Channel-new-name" data-bs-toggle="popover" title="No channel name" data-content="Please enter a channel name" placeholder="Enter channel name">
-                        </div>
-                        <div class="form-group">
-                          <label for="Channel-new-description">
-                            Channel description (Optional)
-                          </label>
-                          <input type="text-" class="form-control" id="Channel-new-description" placeholder="Enter a description">
-                        </div>
-                        <div class="form-group">
-                          Private: <input type="checkbox" id="Channel-new-private">
-                        </div>
-                      </form>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary" id="channel-create" data-bs-dismiss="modal">Create Channel</button>
-                    </div>
-                  </div>
-                </div>
-              </div>  
+          <div class="col" id = "channels-list-container-desktop">
+            <div id = "channels-list-container">
+              <ul class="list-group channels-list" id="channelsList">
+              </ul>
+              <hr>
+              <div id="joinNewSlack">
+                <button type="button" id="newSlackBtn"  data-bs-toggle="modal" data-bs-target="#newChannelModal"  class="btn btn-outline-primary newChannelBtn">
+                  <div class="newChannelBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" fill="#000"/>
+                    </svg>
+                    Create a Channel
+                  </div>  
+                </button>
+              </div>
             </div>
+            
           </div>
-          <div class="col-9" id="messages-pane" >
-            <div class="landing-page" id="messages-container">
-              <h4>Welcome Back!</h1>
-              <h5>Click on a channel to view messages</h5>
+          <div class="col-9" id="messages-pane-desktop">
+            <div id="messages-pane">
+              <div class="landing-page" id="messages-container">
+                <h4>Welcome Back!</h1>
+                <h5>Click on a channel to view messages</h5>
+              </div>
+              <div id="send-message-wrapper"></div>
             </div>
-            <div id="send-message-wrapper"></div>
           </div>
         </div>
       </div>
     </div>
+    <div id="main-page-mobile" style="display: none;">
+      <div id="container-mobile" class="container-mobile">
+        <div id ="channel-page-header-mobile">
+          <div class= 'flex-space-between'>
+            <a class="btn btn-primary" data-bs-toggle="collapse" href="#channelCollapse" role="button" aria-expanded="false" aria-controls="channelCollapse">
+              Channels
+            </a>
+            <a class="btn btn-primary" data-bs-toggle="collapse" href="#channelCollapse2" role="button" aria-expanded="false" aria-controls="channelCollapse2">
+              <div id="focused-channel-header-mobile" class = 'focused-channel-header-mobile'>
+                channel mobile
+              </div>
+            </a>
+            
+          </div>
+          <div class="collapse" id="channelCollapse">
+            <div class="card card-body" id="channels-list-container-mobile">
+            </div>
+          </div>
+          <div class="collapse" id="channelCollapse2">
+            <div class="card card-body" id="channels-list-container2-mobile">
+            </div>
+          </div>
 
-    
+          <div id ="messages-pane-mobile">
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
   
   <footer class="viewport-footer">
+    <!-- Place all Modals here -->
+    <div class="modal fade" id="newChannelModal" tabindex="-1" role="dialog" aria-labelledby="newChannelModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="neChannelModalLabel">Create a new Channel</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="newChannelForm">
+              <div class="form-group">
+                <label for="Channel-new-name">Channel Name</label>
+                <input type="text" class="form-control" id="Channel-new-name" data-bs-toggle="popover" title="No channel name" data-content="Please enter a channel name" placeholder="Enter channel name">
+              </div>
+              <div class="form-group">
+                <label for="Channel-new-description">
+                  Channel description (Optional)
+                </label>
+                <input type="text-" class="form-control" id="Channel-new-description" placeholder="Enter a description">
+              </div>
+              <div class="form-group">
+                Private: <input type="checkbox" id="Channel-new-private">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="channel-create" data-bs-dismiss="modal">Create Channel</button>
+          </div>
+        </div>
+      </div>
+    </div>  
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errerModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="errorModalLabel">Error</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p id = "errorMsg"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>  
+    <div id="popUp" class="popUp" style="display: none;">
+      <div id="errorBox" class="errorBox">
+        <div class="errorHeader" >
+          <h1>Error</h1>
+          <div id="closeError" class="X" style="display: inline-flex; justify-content: flex-end; flex-grow: 0;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" fill="#000"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" fill="#000"/>
+            </svg>
+          </div>
+        </div>
+        <h2 class="errorMsg" id="errorMsg">Error msg</h2>    
+      </div>
+    </div>
     <div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="inviteModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -271,8 +310,7 @@
           </div>
           <div class="modal-body" id = "user-info-content">
           </div>
-          <div class="modal-footer" id = "user-info-footer">
-            
+          <div class="modal-footer" id = "user-info-footer">  
           </div>
         </div>
       </div>
@@ -307,7 +345,7 @@
           </div>
           <div class="modal-body" id = "img-content">
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer" id = "img-footer">
           </div>
         </div>
       </div>

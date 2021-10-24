@@ -1,7 +1,7 @@
 import {fetchPost, apiFetch, login} from './requests.js'
 import  {displayPopup, saveUserIDToLocal, saveTokenToLocal, removeAuthData, getTokenFromLocal, removeAllChildNodes} from './helpers.js'
 import  {showChannelPage} from './channels.js'
-import {TOKEN} from './main.js'
+import {loadWindow, TOKEN} from './main.js'
 
 
 
@@ -36,7 +36,7 @@ document.getElementById("LoginBtn").addEventListener('click', (e) => {
     .then((data) => {
         saveAuthData(data['token'], data['userId']);
         savePasswordToLocal(password);
-        showChannelPage();
+        loadWindow();
     })
     .catch((errorMsg) => {
         displayPopup(errorMsg);
@@ -102,7 +102,7 @@ document.getElementById("RegisterBtn").addEventListener('click', () => {
         saveAuthData(data['token'], data['userId']);
         savePasswordToLocal(password);
         isLoggedIn = true;
-        showChannelPage();
+        loadWindow();
         
     }
 
@@ -139,6 +139,10 @@ export const logout = () => {
         const slackrLogo = document.createElement('h1');
         slackrLogo.appendChild(document.createTextNode("Slackr"));
         mainPageHeader.appendChild(slackrLogo);
+        const mainPageDesktop = document.getElementById('main-page-desktop');
+        mainPageDesktop.style.display = 'none';
+        const mainPageMobile = document.getElementById('main-page-mobile');
+        mainPageMobile.style.display = 'none';
     })
     .catch((errorMsg) => {
         displayPopup(errorMsg);

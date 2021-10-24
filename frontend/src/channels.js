@@ -1,5 +1,5 @@
 import {apiFetch, fetchPost} from './requests.js'
-import {TOKEN} from './main.js'
+import {mobileView, TOKEN} from './main.js'
 import { removeAllChildNodes, getTokenFromLocal, getUserIDFromLocal, createIcon, displayPopup, replaceTextContent, removeEventListeners, attachIconFunction, createPlaceHolderInput, parseISOString, getDateFromISO } from './helpers.js';
 import { displayUserInfo, getUserInfo, getUserProfilePic } from './users.js';
 import { swapView } from './messages.js';
@@ -9,8 +9,10 @@ import { inviteUsers } from './users.js';
 export const showChannelPage = () => {
     // Sub in the correct page
     document.getElementById("auth-page").style.display = 'none';
-    document.getElementById('main-page').style.display = 'grid';
-    document.getElementById('main-page').style.padding = '10px';
+    if (!mobileView) {
+        document.getElementById('main-page-desktop').style.display = 'grid';
+        document.getElementById('main-page-desktop').style.padding = '10px';
+    }
     const userID = getUserIDFromLocal();
 
     // Set welcome message for user
@@ -398,6 +400,8 @@ const createChannelHeader = (userInChannel) => {
         joinChannelBtn.appendChild(document.createTextNode('Join'));
         detailsHeader.appendChild(joinChannelBtn);
     }
+    
+    
     
 }
 

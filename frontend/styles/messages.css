@@ -195,6 +195,11 @@ p {
     width: 5%;
 }
 
+.message-edit {
+    height: 100%;
+    width: 100%;
+}
+
 .image-thumbnail:hover {
     cursor: pointer;
 }

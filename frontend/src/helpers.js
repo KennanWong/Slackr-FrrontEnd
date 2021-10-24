@@ -162,6 +162,7 @@ export const sortListByFieldString = (list, field) => {
 
 export const attachIconFunction = (elementId, icon, functionToDo) => {
     // Get the element
+    console.log(elementId);
     const element = document.getElementById(elementId);
     const iconWrapper = document.createElement('div');
     iconWrapper.classList.add('icon-wrapper')
@@ -276,28 +277,6 @@ export const getImageFromSrc = (src, style) => {
         img.classList.add(style);
     }
     return img;
-}
-
-export const showImage = (imgSrc, message) => {
-    var displayImgModal = new bootstrap.Modal(document.getElementById('displayImgModal'), {
-        keyboard: false
-    })
-
-    const label = document.getElementById('displayImgModalLabel');
-    const image = document.getElementById("img-content");
-
-    console.log('got the labels and images')
-
-    removeAllChildNodes(label);
-    removeAllChildNodes(image);
-    label.appendChild(document.createTextNode("\""+ message + "\""));
-    image.appendChild(getImageFromSrc(imgSrc, 'image'));
-
-    console.log('appended the data')
-
-    displayImgModal.show();
-    console.log('showed modal')
-
 }
 
 export const removeAllClassItems = (node, className) => {

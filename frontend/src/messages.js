@@ -1,5 +1,5 @@
 import { getFocusedChannelId } from "./channels.js";
-import { createIcon, displayPopup, getTokenFromLocal, parseISOString, removeAllChildNodes,getUserIDFromLocal, replaceTextContent, padItem, showUploadImgModal, getDateFromISO, getTimeFromISO, getImageFromSrc, showImage, attachIconFunction, removeAllClassItems, removeEventListeners } from "./helpers.js"
+import { createIcon, displayPopup, getTokenFromLocal, parseISOString, removeAllChildNodes,getUserIDFromLocal, replaceTextContent, padItem, showUploadImgModal, getDateFromISO, getTimeFromISO, getImageFromSrc,  attachIconFunction, removeAllClassItems, removeEventListeners } from "./helpers.js"
 import { displayUserInfo, getUserInfo, getUserProfilePic } from "./users.js"
 import { apiFetch } from "./requests.js";
 
@@ -154,21 +154,23 @@ export const createMessageItem = (message, onlyText) => {
             defaultIcon.classList.add('default-profile');
             */
             const profilePic = getUserProfilePic(userInfo['image'], 'small');
+            profilePic.classList.add('profile-pic');
             messageSender.appendChild(profilePic);
+            // Attach event listener to display userinfo modal
+            profilePic.addEventListener('click', (e) => {
+                displayUserInfo(message['sender']);
+                console.log("displaying user info: ", message['sender']);
+            })
 
             // Add message sender name
             const senderName = document.createElement('h5')
-            senderName.classList.add('user-name');
+            // senderName.classList.add('user-name');
             senderName.appendChild(document.createTextNode(userInfo['name']));
             senderName.style.margin = '0px';
             messageSender.appendChild(senderName);
             messageHeader.appendChild(messageSender);
 
-            // Attach event listener to display userinfo modal
-            senderName.addEventListener('click', (e) => {
-                displayUserInfo(message['sender']);
-                console.log("displaying user info: ", message['sender']);
-            })
+            
 
             // Create date message was sent
             const sentData = parseISOString(message['sentAt']);
@@ -199,11 +201,12 @@ export const createMessageItem = (message, onlyText) => {
             messageContent.appendChild(document.createTextNode(message['message']));
             messageContentWrapper.appendChild(messageContent);
             
-            // Get the image content
+            // Get the image content attach it to the message
             const imageWrapper = document.createElement('div');
             imageWrapper.id = 'image-wrapper-'+message['id'];
             imageWrapper.classList.add('flex');
-            messageContentWrapper.appendChild(imageWrapper);
+            messageContent.appendChild(imageWrapper);
+            
             let imageSrc = message['image'];
             let imageContent = "";
             let removedImage = false;
@@ -211,10 +214,9 @@ export const createMessageItem = (message, onlyText) => {
             if ('image' in message && message['image'] != "") {
                 imageContent = getImageFromSrc(message['image'], 'image-thumbnail');
                 imageWrapper.appendChild(imageContent);
-
                 imageContent.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    showImage(message['image'], message['message']);
+                    showImage(message);
                 });
             }
             
@@ -260,25 +262,29 @@ export const createMessageItem = (message, onlyText) => {
                     console.log("created edit icon");
 
                     // attach event listener to editing
-                    const editMsg = document.createElement('input');
+                    const editMsg = document.createElement('textarea');
                     editMsg.classList.add('edit-message');
-                    editMsg.type = 'text';
+                    // editMsg.type = 'text';
                     editMsg.id = 'edit-msg';
 
                     editIcon.addEventListener ('click', () => {
                         console.log("edit this message");
-                        editMsg.value = message['message'];
+                        editMsg.value = messageContent.textContent;
+                        editMsg.classList.add('message-edit');
                         messageContentWrapper.replaceChild(editMsg, messageContent);
                         focusOnMessage(message);
                         editMsg.focus();
-
                         // swap out the icons
+                        /*
                         const confirmEditBtn = createIcon('bi', 'bi-check2');
                         confirmEditBtn.classList.add('icon-tools');
                         RHScontainer.replaceChild(confirmEditBtn, editIcon);
+                        */
                         
                         // Give option to remove 
+                        /*
                         if (imageContent != "") {
+                            editMsg.appendChild(imageWrapper);
                             const removeImage = () => {
                                 imageWrapper.removeChild(imageContent);
                                 imageContent = "";
@@ -289,35 +295,25 @@ export const createMessageItem = (message, onlyText) => {
                             removeImgBtn.classList.add('icon-tools');
                             attachIconFunction('image-wrapper-'+message['id'], removeImgBtn, removeImage);
                         }
+                        */ 
 
-                        const confirmEdits = () => {
-                            // messageContentWrapper.replaceChild(messageContent, editMsg);
+                        editMsg.addEventListener('blur', () => {
+                            messageContentWrapper.replaceChild(messageContent, editMsg);
                             unFocusMessage(message);
+                            
                             if ((editMsg.value != message['message'] && editMsg.value.length > 0) || removedImage) {
                                 // If the message has been edited send request
+                                
                                 console.log("editing this message");
                                 const body = {
                                     message: editMsg.value,
                                     image: imageSrc,
                                 }
-                                apiFetch('PUT', `message/${getFocusedChannelId()}/${message['id']}`, getTokenFromLocal(), body)
-                                .then((data) => {
-                                    updateMessage(message['id']);
-                                })
-                                .catch((errorMsg) => {
-                                    displayPopup(errorMsg);
-                                })
-                            } else {   
+                                editThisMsg(message['id'], body);
+                            } else {
                                 updateMessage(message['id']);
+                                // messageContentWrapper.replaceChild(messageContent, editMsg);
                             }
-                        }
-
-                        confirmEditBtn.addEventListener('click', () => {
-                            confirmEdits();
-                        })
-
-                        newMsgContainer.addEventListener('mouseleave', () => {
-                            console.log("mouse out");
                         })
                         
                     })
@@ -362,7 +358,6 @@ export const createMessageItem = (message, onlyText) => {
                 // Check if the message has been edited
                 if (message['edited']) {
                     editIcon.onmouseover = () => {
-                        console.log("mouseover on: ", message['message']);
                         const editedAt = parseISOString(message['editedAt']);
                         const editedMsg = "Edited: " + getTimeFromISO(editedAt)+ " " + getDateFromISO(editedAt);
                         replaceTextContent('sentDate-'+ message['id'], editedMsg);
@@ -370,7 +365,6 @@ export const createMessageItem = (message, onlyText) => {
                     };
 
                     editIcon.onmouseout = () => {
-                        console.log("mouse no longer over");
                         replaceTextContent('sentDate-'+ message['id'], dateString);
                         replaceTextContent('sentTime-'+ message['id'], timeString);
                     };
@@ -795,6 +789,63 @@ const showPinnedMessages = () => {
     })
 
     
+}
+
+const editThisMsg = (messageId, body) => {
+    return apiFetch('PUT', `message/${getFocusedChannelId()}/${messageId}`, getTokenFromLocal(), body)
+    .then((data) => {
+        updateMessage(messageId);
+    })
+    .catch((errorMsg) => {
+        displayPopup(errorMsg);
+    })
+}
+
+const showImage = (message) => {
+    var displayImgModal = new bootstrap.Modal(document.getElementById('displayImgModal'), {
+        keyboard: false
+    })
+
+    const label = document.getElementById('displayImgModalLabel');
+    const image = document.getElementById("img-content");
+    const footer = document.getElementById('img-footer');
+
+    console.log('got the labels and images')
+
+    removeAllChildNodes(label);
+    removeAllChildNodes(image);
+    removeAllChildNodes(footer);
+    label.appendChild(document.createTextNode("\""+ message['message'] + "\""));
+    image.appendChild(getImageFromSrc(message['image'], 'image'));
+
+    console.log("userLoggedIn:", getUserIDFromLocal());
+
+    if (message['sender'] == getUserIDFromLocal()) {
+        
+        // Give sender option to remove the image
+        const removeBtn = document.createElement('button');
+        removeBtn.classList.add('btn');
+        removeBtn.classList.add('btn-danger');
+        removeBtn.appendChild(document.createTextNode("Remove image"));
+        footer.appendChild(removeBtn);
+
+        removeBtn.addEventListener('click', () => {
+            const body = {
+                message: message['message'],
+                image: "",
+            }
+            editThisMsg(message['id'], body);
+            displayImgModal.hide();
+        })
+
+    }
+    
+
+    console.log('appended the data')
+
+    displayImgModal.show();
+    console.log('showed modal')
+
 }
 
 const showNewMessage = () => {
