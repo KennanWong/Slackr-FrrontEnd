@@ -1,5 +1,5 @@
 import { getFocusedChannelId } from "./channels.js";
-import { createIcon, displayPopup, getTokenFromLocal, parseISOString, removeAllChildNodes,getUserIDFromLocal, replaceTextContent, padItem, showUploadImgModal, getDateFromISO, getTimeFromISO, getImageFromSrc,  attachIconFunction, removeAllClassItems, removeEventListeners } from "./helpers.js"
+import { createIcon, displayPopup, getTokenFromLocal, parseISOString, removeAllChildNodes,getUserIDFromLocal, replaceTextContent, padItem, showUploadImgModal, getDateFromISO, getTimeFromISO, getImageFromSrc,  attachIconFunction, removeAllClassItems, removeEventListeners, getLoadingElem } from "./helpers.js"
 import { displayUserInfo, getUserInfo, getUserProfilePic } from "./users.js"
 import { apiFetch } from "./requests.js";
 
@@ -10,34 +10,26 @@ export const swapView = () => {
     const messagesPane = document.getElementById('messages-pane');
     messagesPane.style.maxWidth = '100%';
     removeAllChildNodes(messagesPane);
-    console.log("removed child nodes")
 
     const messagesContainer = document.createElement('div');
     messagesContainer.classList.add('messages-container');
     messagesContainer.id = 'messages-container';
     messagesPane.appendChild(messagesContainer);
-    console.log("created messagesContainer");
 
     // create div for pinned messages
     const pinnedMessages = document.createElement('div');
     pinnedMessages.id = 'pinned-messages';
     messagesContainer.appendChild(pinnedMessages);
-    console.log("created pinned messages");
 
     // create div for channel messages
     const messages = document.createElement('div');
     messages.id = 'messages';
     messages.classList.add('messages');
     messagesContainer.appendChild(messages);
-    console.log("created messages");
-
-
     
     showMessages(getFocusedChannelId(), 0);
-    // getChannelMessages();
-    // const messagePages = document.getElementById("message-pages");
-    // removeAllChildNodes(messagePages);
 
+    messagesPane.appendChild(document.createElement('hr'));
     // Create the message send box
     createMessageSendBox();
 }
@@ -56,11 +48,11 @@ export const showMessages = (channelId, startIndex) => {
         const promiseList = [];
         // createMessageNav(data['messages'].length, startIndex);
         for (let i =0 ; i < messages.length; i++) {
-            console.log(messages[i]);
             promiseList.push(createMessageItem(messages[i], false));
         }
         Promise.all(promiseList)
         .then ((messagesList) => {
+            removeLoadingMsg();
             for (let i = 0; i < messagesList.length; i++) {
                 channelMessages.prepend(messagesList[i]);
                 showReacts(messages[i]);
@@ -75,15 +67,14 @@ export const showMessages = (channelId, startIndex) => {
     })
 
     channelMessages.addEventListener('scroll', () => {
-        console.log("scroll height: ", channelMessages.scrollTop );
         setScrollHeight(channelMessages.scrollTop);
         if (channelMessages.scrollTop == 0) {
             // Reached the top of messages
             // ask for more messages
-            console.log("need more messages")
             getChannelMessages(getMessageIndex());
         }
     })
+    addLoadingMsg();
 }
 
 
@@ -98,11 +89,11 @@ const getChannelMessages = (startIndex) => {
         const promiseList = [];
         // createMessageNav(data['messages'].length, startIndex);
         for (let i =0 ; i < messages.length; i++) {
-            console.log(messages[i]);
             promiseList.push(createMessageItem(messages[i], false));
         }
         Promise.all(promiseList)
         .then ((messagesList) => {
+            removeLoadingMsg();
             for (let i = 0; i < messagesList.length; i++) {
                 channelMessages.prepend(messagesList[i]);
                 showReacts(messages[i]);
@@ -114,6 +105,7 @@ const getChannelMessages = (startIndex) => {
     .catch((errorMsg) => {
         displayPopup(errorMsg);
     })
+    addLoadingMsg();
 }
 
 export const createMessageItem = (message, onlyText) => {
@@ -132,9 +124,7 @@ export const createMessageItem = (message, onlyText) => {
 
             // Seperate rhs of main box
             const LHScontainer = document.createElement('div')
-            LHScontainer.style.display = 'flex';
-            LHScontainer.style.flexDirection = 'column';
-            LHScontainer.style.width = '100%'
+            LHScontainer.classList.add('message-lhs-container');
             LHScontainer.id = 'LHS-container-' + message['id'];
             newMsgContainer.appendChild(LHScontainer);
 
@@ -159,7 +149,6 @@ export const createMessageItem = (message, onlyText) => {
             // Attach event listener to display userinfo modal
             profilePic.addEventListener('click', (e) => {
                 displayUserInfo(message['sender']);
-                console.log("displaying user info: ", message['sender']);
             })
 
             // Add message sender name
@@ -196,7 +185,7 @@ export const createMessageItem = (message, onlyText) => {
             LHScontainer.appendChild(messageContentWrapper);
 
             // Get the message content
-            const messageContent = document.createElement('p')
+            const messageContent = document.createElement('p');
             messageContent.id = 'message-content-' + message['id'];
             messageContent.appendChild(document.createTextNode(message['message']));
             messageContentWrapper.appendChild(messageContent);
@@ -235,7 +224,6 @@ export const createMessageItem = (message, onlyText) => {
                     unPinIcon.id = 'pinIcon-' + message['id'];
                     RHScontainer.appendChild(unPinIcon);
                     unPinIcon.addEventListener('click', () => {
-                        console.log("unpin this message");
                         unPinMessage(message);
                     })
                 } else {
@@ -244,7 +232,6 @@ export const createMessageItem = (message, onlyText) => {
                     pinIcon.id = 'pinIcon-' + message['id'];
                     RHScontainer.appendChild(pinIcon);
                     pinIcon.addEventListener('click', () => {
-                        console.log("pin this message");
                         pinMessage(message);
                     })
                 }
@@ -253,13 +240,11 @@ export const createMessageItem = (message, onlyText) => {
                 // If the logged in user is the one who sent the message
                 // Include a remove button and and edit button
                 if (message['sender'] == getUserIDFromLocal()) {
-                    console.log("user sent this message");
 
                     editIcon = createIcon('bi', 'bi-pen');
                     editIcon.classList.add('icon-tools');
                     editIcon.id = 'editIcon-' + message['id'];
                     RHScontainer.appendChild(editIcon);
-                    console.log("created edit icon");
 
                     // attach event listener to editing
                     const editMsg = document.createElement('textarea');
@@ -268,7 +253,6 @@ export const createMessageItem = (message, onlyText) => {
                     editMsg.id = 'edit-msg';
 
                     editIcon.addEventListener ('click', () => {
-                        console.log("edit this message");
                         editMsg.value = messageContent.textContent;
                         editMsg.classList.add('message-edit');
                         messageContentWrapper.replaceChild(editMsg, messageContent);
@@ -303,8 +287,6 @@ export const createMessageItem = (message, onlyText) => {
                             
                             if ((editMsg.value != message['message'] && editMsg.value.length > 0) || removedImage) {
                                 // If the message has been edited send request
-                                
-                                console.log("editing this message");
                                 const body = {
                                     message: editMsg.value,
                                     image: imageSrc,
@@ -324,7 +306,6 @@ export const createMessageItem = (message, onlyText) => {
                     RHScontainer.appendChild(removeIcon);
 
                     removeIcon.addEventListener('click', () => {
-                        console.log("remove this message")
                         apiFetch('DELETE', `message/${getFocusedChannelId()}/${message['id']}`, getTokenFromLocal(), {})
                         .then((data) => {
                             updateMessage(message['id']);
@@ -599,8 +580,6 @@ const showReacts = (message) => {
         }
     };
 
-    console.log(reactsMap);
-
     // Display the channels reacts
     for (let i = 0; i < reactEmojisList.length; i++) {
         if (reactsMap.has(reactEmojisList[i])) {
@@ -633,6 +612,7 @@ const parseChannelMessages = () => {
             startIndex: 0,
             pinnedMessages: [],
             channelMessages: [],
+            messagesWithImg: [],
             sumMessages: 0,
         };
         recurseMsgs(retData)
@@ -654,13 +634,14 @@ const recurseMsgs = (retData) => {
                 if (messages[i]['pinned']) {
                     retData.pinnedMessages.push(messages[i]);
                 }
+                if (messages[i]['image'] != ""  && messages[i]['image'] != null) {
+                    retData.messagesWithImg.push(messages[i]);
+                }
                 retData.channelMessages.push(messages[i]);
             };
             if (messages.length == 25) {
                 // There are potentially more messages in this channel
                 // Recurse in
-                console.log("recurse in");
-                
                 // update retdata
                 retData.startIndex += 25;
 
@@ -686,13 +667,11 @@ const updateMessage = (messageId) => {
     parseChannelMessages()
     .then((channelData) => {
         const channelMessages = channelData.channelMessages;
-        console.log(channelMessages);
+        (channelMessages);
         let messageData = null;
 
         // Find the updated message data
         for (let i = 0; i < channelMessages.length; i++) {
-            console.log("comparing: ", messageId);
-            console.log("Got: ",channelMessages[i]['id'])
             if (channelMessages[i]['id'] == messageId) {
                 messageData = channelMessages[i];
                 break;
@@ -704,7 +683,6 @@ const updateMessage = (messageId) => {
             messages.removeChild(ogWrapper);
         } else {
             // Create the item for it and replace it
-            console.log("messageData: ",messageData);
             createMessageItem(messageData, false)
             .then((msgWrapper) => {
                 messages.replaceChild(msgWrapper, ogWrapper);
@@ -722,7 +700,6 @@ const showPinnedMessagesBanner = () => {
 
     parseChannelMessages()
         .then((channelData) => {
-            console.log(channelData);
             // If the div is empty and there are pinned messages
             if ((pinnedMessagesContainer.childElementCount == 0) && (channelData.pinnedMessages.length != 0)) {
                 // Get the channels details
@@ -746,7 +723,6 @@ const showPinnedMessagesBanner = () => {
                 pinnedMessagesContainer.appendChild(msgContainer);
 
                 pinnedMsg.addEventListener('click', () => {
-                    console.log('clicked view pinned messages');
                     // showPinnedMessages
                     if (pinnedMsg.textContent == "View pinned messages") {
                         replaceTextContent('pinnedMsg', 'Hide pinned messages');
@@ -802,7 +778,9 @@ const editThisMsg = (messageId, body) => {
 }
 
 const showImage = (message) => {
-    var displayImgModal = new bootstrap.Modal(document.getElementById('displayImgModal'), {
+    const displayImgElem = document.getElementById('displayImgModal');
+
+    var displayImgModal = new bootstrap.Modal(displayImgElem, {
         keyboard: false
     })
 
@@ -810,18 +788,13 @@ const showImage = (message) => {
     const image = document.getElementById("img-content");
     const footer = document.getElementById('img-footer');
 
-    console.log('got the labels and images')
-
     removeAllChildNodes(label);
     removeAllChildNodes(image);
     removeAllChildNodes(footer);
     label.appendChild(document.createTextNode("\""+ message['message'] + "\""));
     image.appendChild(getImageFromSrc(message['image'], 'image'));
 
-    console.log("userLoggedIn:", getUserIDFromLocal());
-
     if (message['sender'] == getUserIDFromLocal()) {
-        
         // Give sender option to remove the image
         const removeBtn = document.createElement('button');
         removeBtn.classList.add('btn');
@@ -839,12 +812,54 @@ const showImage = (message) => {
         })
 
     }
-    
 
-    console.log('appended the data')
+    const prevImg = document.getElementById('previous-image');
+    
+    prevImg.disabled = true;
+    const nextImg = document.getElementById('next-image');
+    
+    nextImg.disabled = true;
+
+    parseChannelMessages()
+    .then((retData) => {
+
+        const retMessages = retData.messagesWithImg;
+        for (let i = 0; i < retMessages.length; i++) {
+            if (retMessages[i]['id'] == message['id']) {
+                if (i != 0) {
+                    prevImg.disabled = false;
+                    
+                    prevImg.addEventListener('click', (e) => {
+                        // e.stopPropagation();
+                        displayImgModal.dispose();
+                        removeEventListeners(prevImg);
+                        removeEventListeners(nextImg);
+                        showImage(retMessages[i-1]);
+                        
+                    })
+                } else {
+                    prevImg.disabled = true;
+                }
+                if (i != (retMessages.length-1)) {
+                    nextImg.disabled = false;
+                    nextImg.addEventListener('click', (e) => {
+                        // e.stopPropagation();
+                        displayImgModal.dispose();
+                        removeEventListeners(prevImg);
+                        removeEventListeners(nextImg);
+                        showImage(retMessages[i+1]);
+                    })
+                } else {
+                    nextImg.disabled = true;
+                }
+            } 
+        }
+    })
+    .catch((errorMsg) => {
+        displayPopup(errorMsg);
+    })
 
     displayImgModal.show();
-    console.log('showed modal')
 
 }
 
@@ -852,7 +867,6 @@ const showNewMessage = () => {
     const channelMessages = document.getElementById('messages');
     apiFetch('GET', `message/${getFocusedChannelId()}/?start=${0}`, getTokenFromLocal(), {})
     .then((data) => {
-        console.log(data['messages'][0]);
         createMessageItem(data['messages'][0], false)
         .then((messageItem) => {
             channelMessages.append(messageItem);
@@ -864,3 +878,16 @@ const showNewMessage = () => {
 
 const reactEmojisList = ['😄', '😍', '😢'];
 
+const addLoadingMsg = () => {
+    const channelMessages = document.getElementById('messages');
+    channelMessages.prepend(getLoadingElem());
+}
+
+const removeLoadingMsg = () => {
+    const channelMessages = document.getElementById('messages');
+    const loadingElem = document.getElementById('loading');
+    if (channelMessages.contains(loadingElem)) {
+        channelMessages.removeChild(loadingElem);
+    }
+    
+}

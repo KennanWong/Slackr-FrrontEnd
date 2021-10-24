@@ -116,32 +116,40 @@
         
       </div>
     </div>
-    <div id="main-page-desktop" class="main-page" style="display: none;">
+    <div id="main-page-desktop" class="main-page-desktop" style="display: none;">
       <div id="channels-container">
         <div class="row channel-page-header">
           <div class="col flex" id="channelTitle">
             <h1>Channels</h1>            
           </div>
-          <div class="col-9" id = "focused-channel-header-desktop">
-            <div id="focused-channel-header">
-              <div class="flex-space-between channel-details-header" id = "channel-details-header">
-                <div id="channel-header-info-desktop">
-                  <div id = "channelHeaderInfo" class="flex">
-                    <h1 id="focusedChannelName"></h1>
-                    <i id="privateStatus"></i>
-                  </div>
-                </div>
-                <div id="chanel-header-buttons-desktop">
-                  <div id="chanel-header-buttons">
-                    <button type="button" class="btn btn-secondary" id="leaveChannelBtn" style="display: none;">Leave</button>
-                    <button type="button" class="btn btn-secondary" id="joinChannelBtn" style="display: none;">Join</button>
-                  </div>
+          <div class="col-9">
+            <div class="flex-space-between channel-details-header" id = "channel-details-header-desktop">
+              <div id="channel-header-info-desktop">
+                <div id = "channel-header-info" class="flex">
+                  <h1 id="focusedChannelName"></h1>
+                  <i id="privateStatus"></i>
                 </div>
               </div>
-              <div class="flex-space-between" id = "channelDetailsFooter">
-                <h6 id="focusedChannelDescription" aria-placeholder="channel description"></h6>
-                <p id="channelCreator"></p>
+              <div id="channel-buttons-desktop">
+                <div id="channel-buttons" class="flex" style="gap: 5px;">
+                  <button type="button" class="btn btn-secondary" id="leaveChannelBtn" style="display: none;">Leave</button>
+                  <button type="button" class="btn btn-secondary" id="joinChannelBtn" style="display: none;">Join</button>
+                </div>
               </div>
+            </div>
+            <div class="flex-space-between" id = "channel-details">
+              <div id = "channel-description-desktop">
+                <div id ="channel-description">
+                  <h6 id="focusedChannelDesciption" aria-placeholder="channel description"></h6>
+                </div>
+              </div>
+              <div id = "channel-creator-desktop">
+                <div id="channel-creator">
+                  <p id="channelCreator"></p>
+                </div>
+                
+              </div>
+              
             </div>
           </div>
         </div>
@@ -177,28 +185,36 @@
         </div>
       </div>
     </div>
-    <div id="main-page-mobile" style="display: none;">
-      <div id="container-mobile" class="container-mobile">
+    <div id="main-page-mobile"  style="display: none;">
+      <div id="container-mobile" class="main-page-mobile" >
         <div id ="channel-page-header-mobile">
           <div class= 'flex-space-between'>
-            <a class="btn btn-primary" data-bs-toggle="collapse" href="#channelCollapse" role="button" aria-expanded="false" aria-controls="channelCollapse">
-              Channels
+            <a id="channels-list-btn" class="btn btn-primary mobile-header-buttons" data-bs-toggle="collapse" href="#channelsListCollapse" role="button" aria-expanded="false" aria-controls="channelsList">
+              <h4>Channels</h4>
             </a>
-            <a class="btn btn-primary" data-bs-toggle="collapse" href="#channelCollapse2" role="button" aria-expanded="false" aria-controls="channelCollapse2">
-              <div id="focused-channel-header-mobile" class = 'focused-channel-header-mobile'>
-                channel mobile
-              </div>
+            <a id="channel-details-btn-mobile" class="btn btn-primary mobile-header-buttons" data-bs-toggle="collapse" href="#channelDetailsCollapse" role="button" aria-expanded="false" aria-controls="channelDetails">
+              <div id="channel-header-info-mobile"></div>
             </a>
             
           </div>
-          <div class="collapse" id="channelCollapse">
-            <div class="card card-body" id="channels-list-container-mobile">
+          <div class="collapse" id="channelsListCollapse">
+            <div class="card card-body">
+              <div id="channels-list-container-mobile">
+              </div>
             </div>
           </div>
-          <div class="collapse" id="channelCollapse2">
-            <div class="card card-body" id="channels-list-container2-mobile">
+          <div class="collapse" id="channelDetailsCollapse">
+            <div class="card card-body">
+              <div id="channel-description-mobile">
+              </div>
+              <div id="channel-creator-mobile"></div>
+              <div class="flex" style="justify-content: center;">
+                <div id="channel-buttons-mobile">
+                </div>
+              </div>
             </div>
           </div>
+          <hr>
 
           <div id ="messages-pane-mobile">
           </div>
@@ -343,7 +359,20 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body" id = "img-content">
+          <div class="modal-body">
+            <div class='flex' style="gap: 10px;">
+              <div id="prev">
+                <button type = "button" class = "btn" id="previous-image">
+                  <i class="bi bi-arrow-left"></i>
+                </button>
+              </div>
+              <div id ="img-content"></div>
+              <div id="next">
+                <button type = "button" class = "btn" id="next-image" >
+                  <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>
+            </div>
           </div>
           <div class="modal-footer" id = "img-footer">
           </div>

@@ -14,7 +14,8 @@ const saveAuthData = (token, id) => {
 
 export const showAuthPage = () => {
     document.getElementById("auth-page").style.display = 'block';
-    document.getElementById('main-page').style.display = 'none';
+    document.getElementById('main-page-desktop').style.display = 'none';
+    document.getElementById('main-page-mobile').style.display = 'none';
     document.getElementById("Login-email").value = null;
     document.getElementById("Login-password").value = null;
 }
@@ -98,7 +99,6 @@ document.getElementById("RegisterBtn").addEventListener('click', () => {
     };
 
     const onSuccess = (data) => {
-        console.log(data['token']);
         saveAuthData(data['token'], data['userId']);
         savePasswordToLocal(password);
         isLoggedIn = true;
@@ -127,11 +127,10 @@ document.getElementById("confirmPassword").addEventListener('blur', () => {
 */
 
 export const logout = () => {
-    console.log("logging out")
-
     apiFetch('POST','auth/logout', getTokenFromLocal(), {})
     .then((data) => {
         removeAuthData();
+        localStorage.clear();
         showAuthPage();
         // Reset main page header
         const mainPageHeader = document.getElementById('main-page-header');

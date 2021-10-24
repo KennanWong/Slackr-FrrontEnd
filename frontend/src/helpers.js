@@ -41,19 +41,10 @@ export const displayPopup = (errorMsg) => {
     var errorModal = new bootstrap.Modal(document.getElementById('errorModal'), {
         keyboard: false
     })
-    console.log(errorMsg);
 
     errorModal.show();
 
     replaceTextContent('errorMsg', errorMsg);
-
-
-    /*
-    document.getElementById("popUp").style.display = 'block';
-    console.log("set display to block")
-    document.getElementById("errorMsg").innerHTML = errorMsg;
-    console.log("Set error message")
-    */
 }
 
 
@@ -145,12 +136,8 @@ export const createCheckBoxForm = (value) => {
 }
 
 export const removeEventListeners = (oldNode) => {
-    console.log("entered removeEventListeners function");
     const cloneNode = oldNode.cloneNode(true);
-    console.log("cloned node");
     oldNode.parentNode.replaceChild(cloneNode, oldNode);
-    console.log("replaced child");
-    console.log("exited removeEventListeners function");
 }
 
 export const sortListByFieldString = (list, field) => {
@@ -162,7 +149,6 @@ export const sortListByFieldString = (list, field) => {
 
 export const attachIconFunction = (elementId, icon, functionToDo) => {
     // Get the element
-    console.log(elementId);
     const element = document.getElementById(elementId);
     const iconWrapper = document.createElement('div');
     iconWrapper.classList.add('icon-wrapper')
@@ -182,13 +168,6 @@ export const attachIconFunction = (elementId, icon, functionToDo) => {
             e.stopPropagation();
             functionToDo();
         })
-        console.log('mouseover');
-        /*
-        removeEventListeners(document.getElementById(elementId+'-icon-event'));
-        document.getElementById(elementId+'-icon-event').addEventListener('click', (e) => {
-            functionToDo();
-        });
-        */
     })
 
     // set mouse leave proper and action
@@ -216,7 +195,6 @@ export const createPlaceHolderInput = (placeHolderString, placeHolderClass, plac
 }
 
 export const showUploadImgModal = () => {
-    console.log("showing upload image modal");
     var uploadImgModal = new bootstrap.Modal(document.getElementById('uploadImgModal'), {
         keyboard: false
     })
@@ -232,12 +210,9 @@ export const showUploadImgModal = () => {
     return new Promise ((resolve, reject) => {
         uploadImg.addEventListener('change', (e) => {
             e.stopPropagation();
-            console.log("selected a file");
             uploadImgBtn.disabled = !uploadImgBtn.disabled;
             uploadImgBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                console.log("upload image");
-                //uploadImgModal.hide();
                 const img = uploadImg.files[0];
                 resolve(fileToDataUrl(img));
             })
@@ -282,9 +257,26 @@ export const getImageFromSrc = (src, style) => {
 export const removeAllClassItems = (node, className) => {
     const childNodes = node.childNodes;
     for (let i = 0; i < childNodes.length; i++) {
-        console.log('childnode: ', i);
         if(childNodes.className == className) {
             node.removeChild(node.childNode[i]);
         }
     }
+}
+
+export const getLoadingElem = () => {
+    const div = document.createElement('div');
+    div.id = 'loading';
+    div.style.display = 'flex';
+    div.style.alignItems = 'center';
+    div.style.justifyContent = 'center';
+    div.style.height = '60px';
+    const loading = document.createElement('div');
+    loading.classList.add('spinner-border');
+    loading.role = "status";
+    
+    const innerSpan = document.createElement('span');
+    innerSpan.classList.add('visually-hidden');
+    innerSpan.appendChild(document.createTextNode('Loading...'));
+    div.appendChild(loading);
+    return div;
 }

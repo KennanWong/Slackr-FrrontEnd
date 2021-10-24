@@ -1,7 +1,18 @@
-.main-page {
+.main-page-desktop {
     padding: 25px;
 }
 
-.container-mobile {
-    padding: 10px;
+.main-page-mobile {
+    overflow: hidden;
+    padding: 5px;
+}
+
+.mobile-header-buttons {
+    height: 40px;
+    font-size: 15pt;
+    width: auto;
+}
+
+.mobile-header-buttons h1 {
+    font-size: 1rem;
 }

@@ -44,6 +44,13 @@
     
 }  
 
+.message-lhs-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+}
+
 .messages {
     flex:1;
     overflow: scroll;

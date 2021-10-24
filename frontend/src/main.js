@@ -1,6 +1,6 @@
 import { BACKEND_PORT } from './config.js';
 // A helper you may want to use when uploading new images to the server.
-import { fileToDataUrl, removeAllChildNodes } from './helpers.js';
+import { fileToDataUrl, removeAllChildNodes, removeEventListeners } from './helpers.js';
 import  {showChannelPage} from './channels.js'
 
 export var TOKEN = null;
@@ -14,26 +14,27 @@ window.onload = () => {
 }
 
 export const loadWindow = () => {
-    if (localStorage.getItem("slacker-token") !== null) {
+    if (localStorage.getItem("slacker-token") != null) {
         TOKEN = localStorage.getItem("slacker-token");
-        showChannelPage();
         if (window.innerWidth <= minWidth) {
             setMobileView();
-            mobileView = true;
         } else if (window.innerWidth >= minWidth) {
             setDesktopView();
-            mobileView = false;
         }
+        showChannelPage();
     }
 }
 
 function reportWindowSize() {
-    if (window.innerWidth <= minWidth && !mobileView) {
-        setMobileView();
-        mobileView = true;
-    } else if (window.innerWidth >= minWidth && mobileView) {
-        setDesktopView();
-        mobileView = false;
+    if (localStorage.getItem("slacker-token") != null) {
+        if (window.innerWidth <= minWidth && !mobileView) {
+            setMobileView();
+            
+        } 
+        if (window.innerWidth >= minWidth && mobileView) {
+            setDesktopView();
+            
+        }
     }
 }
 
@@ -43,57 +44,42 @@ console.log('Let\'s go!');
 
 
 const setMobileView = () => {
-    console.log("showing mobile view");
+    mobileView = true;
     const mainPageDesktop = document.getElementById('main-page-desktop');
     mainPageDesktop.style.display = 'none';
     const mainPageMobile = document.getElementById('main-page-mobile');
     mainPageMobile.style.display = 'block';
 
-    
-    const focusedChannelHeader = document.getElementById('focused-channel-header');
-    const focusedChannelHeaderDesktop = document.getElementById('focused-channel-header-desktop');
-    removeAllChildNodes(focusedChannelHeaderDesktop);
-    const focusedChannelHeaderMobile = document.getElementById('focused-channel-header-mobile');
-    removeAllChildNodes(focusedChannelHeaderMobile);
-    focusedChannelHeaderMobile.appendChild(focusedChannelHeader);
-    
 
     // Remove channelTitle
     const channelTitle = document.getElementById('channelTitle');
     removeAllChildNodes(channelTitle);
 
-    // Get the channels-list-container
-    const channelsListContainer = document.getElementById('channels-list-container');
-    const channelsListContainerDesktop = document.getElementById('channels-list-container-desktop')
-    removeAllChildNodes(channelsListContainerDesktop);
-    const channelsListContainerMobile = document.getElementById('channels-list-container-mobile')
-    removeAllChildNodes(channelsListContainerMobile);
-    channelsListContainerMobile.appendChild(channelsListContainer);
+    // swap channel-header-info
+    swapElements('desktop','mobile', 'channel-header-info');
 
-    const messagesPane = document.getElementById('messages-pane');
-    const messagesPaneDesktop = document.getElementById('messages-pane-desktop');
-    removeAllChildNodes(messagesPaneDesktop);
-    const messagesPaneMobile = document.getElementById('messages-pane-mobile');
-    removeAllChildNodes(messagesPaneMobile);
-    messagesPaneMobile.appendChild(messagesPane);
+    // Swap channel-details-footer
+    swapElements('desktop', 'mobile', 'channel-description');
+    swapElements('desktop', 'mobile', 'channel-creator');
+
+    // swap channel-buttons
+    swapElements('desktop', 'mobile', 'channel-buttons');
+
+    // swap channels list
+    swapElements('desktop', 'mobile', 'channels-list-container');
+    
+    
+    // Swap messages pane
+    swapElements('desktop','mobile','messages-pane');
 
 }
 
 const setDesktopView = () => {
-    console.log("showing desktop view");
+    mobileView = false;
     const mainPageDesktop = document.getElementById('main-page-desktop');
     mainPageDesktop.style.display = 'block';
     const mainPageMobile = document.getElementById('main-page-mobile');
     mainPageMobile.style.display = 'none';
-    
-    // Get the focusedChannel header
-    const focusedChannelHeader = document.getElementById('focused-channel-header');
-    const focusedChannelHeaderDesktop = document.getElementById('focused-channel-header-desktop');
-    removeAllChildNodes(focusedChannelHeaderDesktop);
-    const focusedChannelHeaderMobile = document.getElementById('focused-channel-header-mobile');
-    removeAllChildNodes(focusedChannelHeaderMobile);
-    focusedChannelHeaderDesktop.appendChild(focusedChannelHeader);
-    
 
     // Set channels title
     const channelTitle = document.getElementById('channelTitle');
@@ -102,20 +88,40 @@ const setDesktopView = () => {
     title.appendChild(document.createTextNode('Channels'));
     channelTitle.appendChild(title)
 
-    // Get the channels-list-container
-    const channelsListContainer = document.getElementById('channels-list-container');
-    const channelsListContainerDesktop = document.getElementById('channels-list-container-desktop')
-    removeAllChildNodes(channelsListContainerDesktop);
-    const channelsListContainerMobile = document.getElementById('channels-list-container-mobile')
-    removeAllChildNodes(channelsListContainerMobile);
-    channelsListContainerDesktop.appendChild(channelsListContainer);
+    // swap channel-header-info
+    swapElements('mobile', 'desktop','channel-header-info');
 
-    // Get messages container
-    const messagesPane = document.getElementById('messages-pane');
-    const messagesPaneDesktop = document.getElementById('messages-pane-desktop');
-    removeAllChildNodes(messagesPaneDesktop);
-    const messagesPaneMobile = document.getElementById('messages-pane-mobile');
-    removeAllChildNodes(messagesPaneMobile);
-    messagesPaneDesktop.appendChild(messagesPane);
+    // Swap channel-details-footer
+    swapElements('mobile', 'desktop', 'channel-description');
+    swapElements('mobile', 'desktop', 'channel-creator');
+
+    // swap channel-buttons
+    swapElements('mobile', 'desktop', 'channel-buttons');
+
+    // swap channels list
+    swapElements('mobile', 'desktop', 'channels-list-container');
+    
+    // Swap messages pane
+    swapElements('mobile', 'desktop', 'messages-pane');
+
+
+}
+
+/**
+ * Swap an element from one object to another
+ * @param {*} fromObjId 
+ * @param {*} toObjId 
+ * @param {*} elementId 
+ */
+const swapElements = (fromObjId, toObjId, elementId) => {
+    const fromObj = document.getElementById(elementId+'-'+fromObjId);
+    const toObj = document.getElementById(elementId+'-'+toObjId);
+    const elem = document.getElementById(elementId);
+
+    if (fromObj.contains(elem)) {
+        const removedElem = fromObj.removeChild(elem);
+        toObj.appendChild(removedElem);
+    }
+    
 
 }

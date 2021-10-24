@@ -44,17 +44,14 @@ export const showChannelPage = () => {
         var channelsList = document.getElementById('channelsList');
         removeAllChildNodes(channelsList);
         const channels = data['channels'];
-        console.log("listing channels")
-        console.log(channels);
 
         const userID = getUserIDFromLocal();
-        focusOnChannel(getFocusedChannelId(), true);
-        if (channels.length === 0) {
-            console.log("no channels to list")
-        } else {
+        if (getFocusedChannelId() != null) {
+            focusOnChannel(getFocusedChannelId(), true);
+        }
+        
+        if (channels.length != 0) {
             for (let i = 0; i < channels.length; i++) {
-                console.log("channel name: ", channels[i]['name']);
-                console.log("channel private: ", channels[i]['private']);
                 if (checkUserInChannel(userID, channels[i]) || !channels[i]['private']) {
                     // Create channel Item header
                     let channelHeader = document.createElement('div')
@@ -86,10 +83,11 @@ export const showChannelPage = () => {
                     channelItem.appendChild(channelHeader);
                     channelsList.appendChild(channelItem);
                     saveChannelIdToLocal(i, channels[i]['id'])
-                    channelItem.addEventListener('click', () => {
-                        focusOnChannel(channels[i]['id'], false);
+                    channelItem.addEventListener('click', (e) => {
+                        e.stopPropagation();
                         saveFocuseChannelName(channels[i]['name']);
                         saveFocusedChannelId(channels[i]['id']);
+                        focusOnChannel(channels[i]['id'], true);
                     });
                 }
             }
@@ -111,47 +109,30 @@ export const showChannelPage = () => {
         createChannel()
     });
 
-    
-
     defualtLandingPage();
-    
-    console.log(TOKEN)
 }
 
 
 // Function to focus on a single channel
 const focusOnChannel = (channelId, refresh) => {
-    console.log("focusing on channel: ", channelId);
     if ((getFocusedChannelId() != channelId) || refresh) {
         getChannelDetails(channelId)
         .then((channelDetails) => {
-            console.log("Creating channel header for channel that i am in");
             createChannelHeader(true);
             replaceTextContent('focusedChannelName',getFocusedChanneName());
-            console.log('user is in this channel')
             const leaveChannelBtn = document.getElementById('leave-channel-btn');
-            console.log('changed the buttons');
             // Set channel name
             replaceTextContent('focusedChannelName', channelDetails['name']);
             saveFocusedChannelId(channelId);
     
-            console.log("set channel name")
     
             // Set channel description
             if (channelDetails['description'].length == 0) {
-                console.log("empty description")
     
                 // Create placeholder
                 const placeHolderDesc = createPlaceHolderInput('Channel description', 'borderless-input', 'placeholder-description');
-                console.log("create placeholder");
-    
-                const descriptionContainer = document.getElementById('description-container');
-                console.log("got the container");
-    
+                const descriptionContainer = document.getElementById('channel-description');
                 descriptionContainer.appendChild(placeHolderDesc);
-    
-                console.log("added placeholder");
-    
                 placeHolderDesc.addEventListener('blur' , (e) => {
                     e.stopPropagation();
                     if (placeHolderDesc.value.length != 0) {
@@ -160,17 +141,16 @@ const focusOnChannel = (channelId, refresh) => {
                 })
     
             } else {
-                console.log("channel has a description");
-                const descriptionContainer = document.getElementById('description-container');
+                const descriptionContainer = document.getElementById('channel-description');
                 const channelDescription = document.getElementById('focusedChannelDescription');
                 replaceTextContent('focusedChannelDescription',channelDetails['description']);
-                console.log("replaced content");
+
                 const editChannelDesc = () => {
                     let changeChannelDes = document.createElement('input');
                     changeChannelDes.setAttribute('type', 'text');
                     changeChannelDes.setAttribute('id', 'change-channel-des');
                     changeChannelDes.classList.add('border-bottom-input')
-                    changeChannelDes.classList.add('change-channel-des');
+                    //  changeChannelDes.classList.add('change-channel-des');
                     descriptionContainer.replaceChild(changeChannelDes, channelDescription); 
                     changeChannelDes.value = channelDescription.textContent;
                     changeChannelDes.focus();
@@ -188,10 +168,9 @@ const focusOnChannel = (channelId, refresh) => {
     
                 const editIcon = createIcon('bi', 'bi-pen-fill');
                 editIcon.classList.add('icon-tools');
-                attachIconFunction('description-container', editIcon, editChannelDesc);
+                attachIconFunction('channel-description', editIcon, editChannelDesc);
             }
     
-            console.log("set channel description")
     
             // Set channel private status
             const privateStatus = document.getElementById("privateStatus");
@@ -203,8 +182,7 @@ const focusOnChannel = (channelId, refresh) => {
                 privateStatus.classList.add('bi');
                 privateStatus.classList.add('bi-lock-fill');
             }
-            
-            console.log("set channel private status")
+
             // Set channel created by
             getUserInfo(channelDetails['creator'])
             .then((creatorData) => {
@@ -215,8 +193,6 @@ const focusOnChannel = (channelId, refresh) => {
             .catch((errorMsg) => {
                 displayPopup(errorMsg);
             })
-    
-            console.log("set channel creator name")
     
             leaveChannelBtn.removeEventListener('click', leaveChannel)
             leaveChannelBtn.addEventListener('click', leaveChannel)
@@ -264,20 +240,15 @@ const focusOnChannel = (channelId, refresh) => {
 };
 
 const createChannelHeader = (userInChannel) => {
-    const focusedHeader = document.getElementById('focused-channel-header');
-    removeAllChildNodes(focusedHeader);
 
-    // Create focused channel header
-    const detailsHeader = document.createElement("div");
-    detailsHeader.id = 'channel-details-header';
-    detailsHeader.classList.add('flex-space-between');
-    detailsHeader.classList.add('channel-details-header');
-    focusedHeader.appendChild(detailsHeader);
+    if (mobileView) {
+        const btn = document.getElementById('channel-details-btn-mobile');
+        btn.disabled = false;
+    }
 
-    const headerInfo = document.createElement('div');
-    headerInfo.classList.add('flex');
-    headerInfo.id = "channelHeaderInfo"
-    detailsHeader.appendChild(headerInfo);
+    // Get the channel header info
+    const headerInfo = document.getElementById('channel-header-info');
+    removeAllChildNodes(headerInfo);
 
     // Declare channel name
     const channelName = document.createElement('h1');
@@ -290,31 +261,27 @@ const createChannelHeader = (userInChannel) => {
     privateStatus.id = 'privateStatus';
     headerInfo.appendChild(privateStatus);
 
-    // Create space for desciption
-    const detailsFooter = document.createElement('div');
-    detailsFooter.classList.add('flex-space-between');
-    focusedHeader.appendChild(detailsFooter);
-    
-    const descriptionContainer = document.createElement('div');
-    descriptionContainer.classList.add('flex');
-    descriptionContainer.style.gap = '5px';
-    descriptionContainer.id = 'description-container'
-    detailsFooter.appendChild(descriptionContainer);
+    /*____________________________*/
 
-    const channelDescription = document.createElement('h6');
-    channelDescription.id = 'focusedChannelDescription';
-    descriptionContainer.appendChild(channelDescription);
+    // Create space for desciption in details footer
+    const channelDescription = document.getElementById('channel-description');
+    removeAllChildNodes(channelDescription);
+    const focusedChannelDescription = document.createElement('h6');
+    focusedChannelDescription.id = 'focusedChannelDescription';
+    focusedChannelDescription.ariaPlaceholder = "channel description";
+    channelDescription.appendChild(focusedChannelDescription);
 
-    const channelCreator = document.createElement('p');
-    channelCreator.id = 'channelCreator';
-    detailsFooter.appendChild(channelCreator);
+    const channelCreator = document.getElementById('channel-creator');
+    removeAllChildNodes(channelCreator);
+    const channelCreatorName = document.createElement('p');
+    channelCreatorName.id = 'channelCreator';
+    channelCreator.appendChild(channelCreatorName);
 
     // Create buttons
+    const channelButtons = document.getElementById('channel-buttons');
+    removeAllChildNodes(channelButtons);
     if (userInChannel) {
-        const channelOptions = document.createElement('div');
-        channelOptions.classList.add('flex');
-        channelOptions.style.gap = '5px';
-        detailsHeader.appendChild(channelOptions);
+        
 
         // Create invite channel button
         const inviteIcon = createIcon('bi', 'bi-person-plus-fill');
@@ -324,7 +291,7 @@ const createChannelHeader = (userInChannel) => {
         inviteBtn.classList.add('btn');
         inviteBtn.classList.add('btn-success');
         inviteBtn.appendChild(inviteIcon);
-        channelOptions.appendChild(inviteBtn);
+        channelButtons.appendChild(inviteBtn);
 
         inviteBtn.onmouseover = () => {
             removeAllChildNodes(inviteBtn);
@@ -351,12 +318,11 @@ const createChannelHeader = (userInChannel) => {
         leaveChannelBtn.classList.add('btn-secondary');
         leaveChannelBtn.id = "leave-channel-btn";
         leaveChannelBtn.appendChild(document.createTextNode('Leave'));
-        channelOptions.appendChild(leaveChannelBtn);
+        channelButtons.appendChild(leaveChannelBtn);
         
         // Allow for the name of channel to be switched
-        
         const editChannelName = () => {
-            const focusedChannelHeader = document.getElementById("channelHeaderInfo");
+            const focusedChannelHeader = document.getElementById("channel-header-info");
             let changeChannelName = document.createElement('input');
             changeChannelName.setAttribute('type', 'text');
             changeChannelName.setAttribute('id', 'change-channel-name');
@@ -380,15 +346,7 @@ const createChannelHeader = (userInChannel) => {
         }
         const editIcon = createIcon('bi', 'bi-pen-fill');
         editIcon.classList.add('icon-tools');
-        attachIconFunction('channelHeaderInfo', editIcon, editChannelName);
-        console.log("attached edit to channel name");
-
-        console.log("attached function");
-
-        
-
-        
-
+        attachIconFunction('channel-header-info', editIcon, editChannelName);
 
     } else {
         // Join channel btn
@@ -398,7 +356,7 @@ const createChannelHeader = (userInChannel) => {
         joinChannelBtn.classList.add('btn-secondary');
         joinChannelBtn.id = "join-channel-btn";
         joinChannelBtn.appendChild(document.createTextNode('Join'));
-        detailsHeader.appendChild(joinChannelBtn);
+        channelButtons.appendChild(joinChannelBtn);
     }
     
     
@@ -415,7 +373,6 @@ const saveChannelIdToLocal = (channelIndex, channelId) => {
 }
 
 const updateChannelDetails = (channelId, field, toChange) => {
-    console.log('channel id to change is:',channelId);
     // Retrieve the current channels details
     getChannelDetails(channelId)
     .then((channelDetails) => {
@@ -441,7 +398,7 @@ const updateChannelDetails = (channelId, field, toChange) => {
         })
         .catch((errorMsg) => {
             displayPopup(errorMsg);
-        });;
+        });
     })
     .catch((errorMsg) => {
         displayPopup(errorMsg);
@@ -489,7 +446,6 @@ const createChannel = () => {
         const onSuccess = (data) => {
             showChannelPage();
             focusOnChannel(data['channelId'], true);
-            console.log("created new channel");
             document.getElementById("newChannelModal").style.display = 'none';
         };
     
@@ -518,11 +474,9 @@ const checkUserInChannel = (userID, channel) => {
     const channelMembers = channel['members'];
     for (let i = 0; i < channelMembers.length; i++) {
         if (channelMembers[i] == userID) {
-            console.log("User is in channel: ", channel['name']);
             return true;
         }
     }
-    console.log("User not in channel: ", channel['name']);
     return false;
 }
 
@@ -532,7 +486,6 @@ const getChannelDetails = (channelId) => {
 }
 
 const joinChannel = () => {
-    console.log("joining channel: ", getFocusedChanneName(), getFocusedChannelId())
     apiFetch('POST', `channel/${getFocusedChannelId()}/join`, getTokenFromLocal(), {})
     .then ((data) => {
         showChannelPage();
@@ -544,7 +497,6 @@ const joinChannel = () => {
 }
 
 const leaveChannel = () => {
-    console.log("leavin channel: ", getFocusedChanneName(), getFocusedChannelId())
     apiFetch('POST', `channel/${getFocusedChannelId()}/leave`, getTokenFromLocal(), {})
     .then((data) => {
         defualtLandingPage();
@@ -564,8 +516,25 @@ export const defualtLandingPage = () => {
     selectChannelMsg.appendChild(document.createTextNode("Select a channel to start viewing messages"))
     messagesPane.appendChild(selectChannelMsg);
 
-    const focusedChannelHeader = document.getElementById('focused-channel-header');
-    removeAllChildNodes(focusedChannelHeader);
+    const headerInfo = document.getElementById('channel-header-info');
+    removeAllChildNodes(headerInfo);
+
+    const channelDescription = document.getElementById('channel-description');
+    removeAllChildNodes(channelDescription);
+
+    const channelCreator = document.getElementById('channel-creator');
+    removeAllChildNodes(channelCreator);
+
+    const channelButtons = document.getElementById('channel-buttons');
+    removeAllChildNodes(channelButtons);
+
+    // if mobile view disable the drop down
+    if (mobileView) {
+        if (mobileView) {
+            const btn = document.getElementById('channel-details-btn-mobile');
+            btn.disabled = true;
+        }
+    }
 }
 
 export const getMembersOfChannel = (channelId) => {

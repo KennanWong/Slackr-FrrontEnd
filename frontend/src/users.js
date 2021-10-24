@@ -10,7 +10,6 @@ export const inviteUsers = () => {
     });
     populateInviteForm();
     myModal.show();
-    console.log("Inviting users!");
 }
 
 const inviteToChannel = (users) => {
@@ -56,7 +55,6 @@ const populateInviteForm = () => {
             // Retrieved all the users information
             Promise.all(getUserPromises)
             .then ((userList) => {
-                console.log("Retrieved all the users information");
                 for (let i = 0; i < userList.length; i++) {
                     nameToId.set(userList[i]['name'], userIds[i]);
                 }
@@ -85,16 +83,13 @@ const populateInviteForm = () => {
     
     document.getElementById('invite-users').addEventListener('click', (e) => {
         // inviteUsers()
-        console.log("pressed invite user btn");
         const usersToInvite = [];
-        console.log(nameToId);
         for (let i = 0; i < inviteList.getElementsByTagName('label').length; i++) {
             if (inviteList.getElementsByTagName('input')[i].checked) {
                 const name = inviteList.getElementsByTagName('label')[i].textContent;
                 usersToInvite.push(nameToId.get(name));
             }
         }
-        console.log(usersToInvite);
         inviteToChannel(usersToInvite);
     });
     
@@ -102,7 +97,6 @@ const populateInviteForm = () => {
 
 // Display userInfoModal
 export const displayUserInfo = (userId) => {
-    console.log("displaying user info")
     const userInfoContent = document.getElementById('user-info-content');
     removeAllChildNodes(userInfoContent);
 
@@ -263,7 +257,6 @@ export const displayUserInfo = (userId) => {
             // Function to edit email
             const editEmail = () => {
                 // Create email input
-                console.log('editing user email');
                 const inputEmail = document.createElement('input');
                 inputEmail.type = 'text';
                 inputEmail.classList.add('border-bottom-input');
@@ -295,8 +288,7 @@ export const displayUserInfo = (userId) => {
             
             const password = document.createElement('div');
             password.classList.add('user-info-content');
-            password.id = 'user-info-password'
-            console.log(userInfo)
+            password.id = 'user-info-password';
             password.appendChild(document.createTextNode(makeLikePassword(getPasswordFromLocal())));
             passwordContainer.appendChild(password)
             userInfoBody.appendChild(passwordContainer);
