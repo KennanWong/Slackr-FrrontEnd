@@ -125,7 +125,7 @@
           <div class="col-9">
             <div class="flex-space-between channel-details-header" id = "channel-details-header-desktop">
               <div id="channel-header-info-desktop">
-                <div id = "channel-header-info" class="flex">
+                <div id = "channel-header-info" class="flex-space-between channel-header">
                   <h1 id="focusedChannelName"></h1>
                   <i id="privateStatus"></i>
                 </div>
@@ -188,32 +188,35 @@
     <div id="main-page-mobile"  style="display: none;">
       <div id="container-mobile" class="main-page-mobile" >
         <div id ="channel-page-header-mobile">
-          <div class= 'flex-space-between'>
-            <a id="channels-list-btn" class="btn btn-primary mobile-header-buttons" data-bs-toggle="collapse" href="#channelsListCollapse" role="button" aria-expanded="false" aria-controls="channelsList">
-              <h4>Channels</h4>
-            </a>
-            <a id="channel-details-btn-mobile" class="btn btn-primary mobile-header-buttons" data-bs-toggle="collapse" href="#channelDetailsCollapse" role="button" aria-expanded="false" aria-controls="channelDetails">
-              <div id="channel-header-info-mobile"></div>
-            </a>
-            
-          </div>
-          <div class="collapse" id="channelsListCollapse">
-            <div class="card card-body">
-              <div id="channels-list-container-mobile">
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <a id="channel-details-btn-mobile" class = "channel-name-mobile" data-bs-toggle="collapse" href="#channelDetailsCollapse" role="button" aria-expanded="false" aria-controls="channelDetails">
+                <div id="focused-channel-mobile">
+                </div>
+              </a>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <div id="channels-list-container-mobile">
+                  </div>
+                </ul>
               </div>
-            </div>
-          </div>
-          <div class="collapse" id="channelDetailsCollapse">
-            <div class="card card-body">
-              <div id="channel-description-mobile">
-              </div>
-              <div id="channel-creator-mobile"></div>
-              <div class="flex" style="justify-content: center;">
-                <div id="channel-buttons-mobile">
+              <div class="collapse navbar-collapse" id="channelDetailsCollapse">
+                <div class="card card-body">
+                  <div id="channel-header-info-mobile"></div>
+                  <div id="channel-description-mobile"></div>
+                  <div id="channel-creator-mobile"></div>
+                  <div class="flex" style="justify-content: center;">
+                    <div id="channel-buttons-mobile">
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </nav>
+          
           <hr>
 
           <div id ="messages-pane-mobile">

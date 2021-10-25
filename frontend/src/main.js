@@ -1,7 +1,7 @@
 import { BACKEND_PORT } from './config.js';
 // A helper you may want to use when uploading new images to the server.
-import { fileToDataUrl, removeAllChildNodes, removeEventListeners } from './helpers.js';
-import  {showChannelPage} from './channels.js'
+import { fileToDataUrl, removeAllChildNodes, removeEventListeners, replaceTextContent } from './helpers.js';
+import  {showChannelPage, getFocusedChannelName} from './channels.js'
 
 export var TOKEN = null;
 
@@ -54,6 +54,9 @@ const setMobileView = () => {
     // Remove channelTitle
     const channelTitle = document.getElementById('channelTitle');
     removeAllChildNodes(channelTitle);
+
+    // set channel name
+    replaceTextContent('focused-channel-mobile',getFocusedChannelName());
 
     // swap channel-header-info
     swapElements('desktop','mobile', 'channel-header-info');

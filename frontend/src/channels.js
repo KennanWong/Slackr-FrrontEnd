@@ -116,10 +116,15 @@ export const showChannelPage = () => {
 // Function to focus on a single channel
 const focusOnChannel = (channelId, refresh) => {
     if ((getFocusedChannelId() != channelId) || refresh) {
+
+        if (mobileView) {
+            replaceTextContent('focused-channel-mobile',getFocusedChannelName());
+        }
+
         getChannelDetails(channelId)
         .then((channelDetails) => {
             createChannelHeader(true);
-            replaceTextContent('focusedChannelName',getFocusedChanneName());
+            replaceTextContent('focusedChannelName',getFocusedChannelName());
             const leaveChannelBtn = document.getElementById('leave-channel-btn');
             // Set channel name
             replaceTextContent('focusedChannelName', channelDetails['name']);
@@ -203,22 +208,10 @@ const focusOnChannel = (channelId, refresh) => {
             // User not in the channel
             // display button to join
             createChannelHeader(false);
-            replaceTextContent('focusedChannelName',getFocusedChanneName());
+            replaceTextContent('focusedChannelName',getFocusedChannelName());
             const joinChannelBtn = document.getElementById('join-channel-btn');
             replaceTextContent('focusedChannelDescription', " ");
             replaceTextContent('channelCreator', " ");
-    
-            /*
-            const privateStatus = document.getElementById("privateStatus");
-            // Remove previous status
-            privateStatus.classList.remove('bi')
-            if (privateStatus.classList.contains('bi-unlock')) {
-                privateStatus.classList.remove('bi-unlock');
-            } else if (privateStatus.classList.contains('bi-lock-fill')) {
-                privateStatus.classList.remove('bi-lock-fill');
-            };
-            */
-    
     
             // Remove the previous messagesPane
             const messagesPane = document.getElementById('messages-pane');
@@ -233,6 +226,7 @@ const focusOnChannel = (channelId, refresh) => {
             // Remove existing listener and add a new one
             joinChannelBtn.removeEventListener('click', joinChannel)
             joinChannelBtn.addEventListener('click', joinChannel);
+
         });    
     }
     
@@ -256,13 +250,6 @@ const createChannelHeader = (userInChannel) => {
     channelName.classList.add('channel-name');
     headerInfo.appendChild(channelName);
 
-    // Declare private status
-    const privateStatus = document.createElement('i');
-    privateStatus.id = 'privateStatus';
-    headerInfo.appendChild(privateStatus);
-
-    /*____________________________*/
-
     // Create space for desciption in details footer
     const channelDescription = document.getElementById('channel-description');
     removeAllChildNodes(channelDescription);
@@ -280,9 +267,8 @@ const createChannelHeader = (userInChannel) => {
     // Create buttons
     const channelButtons = document.getElementById('channel-buttons');
     removeAllChildNodes(channelButtons);
-    if (userInChannel) {
-        
 
+    if (userInChannel) {
         // Create invite channel button
         const inviteIcon = createIcon('bi', 'bi-person-plus-fill');
         const inviteBtn = document.createElement('button');
@@ -348,6 +334,19 @@ const createChannelHeader = (userInChannel) => {
         editIcon.classList.add('icon-tools');
         attachIconFunction('channel-header-info', editIcon, editChannelName);
 
+        // Declare private status
+        const privateStatus = document.createElement('i');
+        privateStatus.id = 'privateStatus';
+        const statusBtn = document.createElement('button');
+        statusBtn.type = 'button';
+        statusBtn.classList.add('btn');
+        statusBtn.classList.add('btn-info');
+        statusBtn.disabled = true
+        statusBtn.id = "channel-status-btn";
+        statusBtn.appendChild(privateStatus);
+        channelButtons.appendChild(statusBtn);
+
+
     } else {
         // Join channel btn
         const joinChannelBtn = document.createElement('button');
@@ -395,6 +394,10 @@ const updateChannelDetails = (channelId, field, toChange) => {
         .then((data) => {
             focusOnChannel(channelId, true);
             showChannelPage();
+            if (mobileView) {
+                replaceTextContent('focused-channel-mobile', body.name);
+            }
+            saveFocuseChannelName(body.name);
         })
         .catch((errorMsg) => {
             displayPopup(errorMsg);
@@ -419,7 +422,7 @@ const saveFocuseChannelName = (name) => {
     localStorage.setItem('focusedChannelName', name);
 }
 
-const getFocusedChanneName = (name) => {
+export const getFocusedChannelName = (name) => {
     return localStorage.getItem('focusedChannelName');
 }
 
@@ -499,9 +502,14 @@ const joinChannel = () => {
 const leaveChannel = () => {
     apiFetch('POST', `channel/${getFocusedChannelId()}/leave`, getTokenFromLocal(), {})
     .then((data) => {
+        localStorage.removeItem('focusedChannelId');
+        localStorage.removeItem('focusedChannelName');
         defualtLandingPage();
-        saveFocusedChannelId(null);
         showChannelPage();
+        if (mobileView) {
+            replaceTextContent('focused-channel-mobile','');
+        }
+
     })
     .catch((errorMsg) => {
         displayPopup(errorMsg)
@@ -535,6 +543,11 @@ export const defualtLandingPage = () => {
             btn.disabled = true;
         }
     }
+    /*
+    // Remove the focused channel id and name
+    localStorage.removeItem('focusedChannelId');
+    localStorage.removeItem('focusedChannelName');
+    */
 }
 
 export const getMembersOfChannel = (channelId) => {
